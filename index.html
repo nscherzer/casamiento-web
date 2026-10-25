@@ -3,23 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Julia y Nico se casan · 9.10.2027</title>
-<meta name="description" content="Julia y Nico se casan el 9 de octubre de 2027 en Buenos Aires. Julia und Nico heiraten.">
-<meta property="og:title" content="Julia y Nico se casan">
-<meta property="og:description" content="9 de octubre de 2027, Buenos Aires">
+<title>Julia &amp; Nico · 9.10.2027</title>
+<meta name="description" content="Julia y Nico se casan el sábado 9 de octubre de 2027 en Buenos Aires. Julia und Nico heiraten.">
+<meta property="og:title" content="Julia &amp; Nico">
+<meta property="og:description" content="Sábado 9 de octubre de 2027, Buenos Aires">
 <meta property="og:image" content="https://nscherzer.github.io/casamiento-web/foto.jpg">
 <meta name="theme-color" content="#f3f4f1">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2236%22 fill=%22none%22 stroke=%22%23a8603a%22 stroke-width=%2210%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&display=swap" rel="stylesheet">
 <style>
-  /* Sal y cobre: la paleta sale de la foto (sal de las Salinas Grandes, cielo de tormenta, el anillo). */
+  /* Formal, como una invitación grabada: una didona (Bodoni Moda), composición centrada,
+     y la paleta de la foto: blanco sal, tinta de tormenta y el cobre del anillo. */
   :root {
     --salt: #f3f4f1;
+    --paper: #fbfbf9;
     --storm: #232833;
-    --slate: #666d7b;
-    --haze: #c9ccd3;
+    --slate: #5f6573;
     --copper: #a8603a;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,26 +28,27 @@
   body {
     background: var(--salt);
     color: var(--storm);
-    font-family: "Archivo", system-ui, sans-serif;
-    font-weight: 380;
-    font-size: 17px;
-    line-height: 1.55;
+    font-family: "Bodoni Moda", "Didot", "Bodoni 72", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.6;
     overflow-x: hidden;
   }
-  .wide { font-stretch: 125%; font-variation-settings: "wdth" 125; }
-  :focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
+  :focus-visible { outline: 1.5px solid var(--copper); outline-offset: 3px; }
+  .sc { font-variant-caps: all-small-caps; letter-spacing: .14em; }
 
-  /* idioma: dos palabras, la activa subrayada en cobre */
+  /* idioma */
   .lang {
     position: fixed; top: max(12px, env(safe-area-inset-top)); right: 12px; z-index: 50;
-    display: flex; background: var(--salt); border-radius: 3px; padding: 2px 4px;
+    display: flex; background: var(--paper); padding: 2px 6px;
   }
   .lang button {
     border: 0; background: none; cursor: pointer; color: var(--slate);
-    font: 450 14px/1 "Archivo", sans-serif; padding: 8px 8px 7px;
-    border-bottom: 1.5px solid transparent;
+    font: italic 400 15px/1 "Bodoni Moda", serif; padding: 9px 7px 7px;
+    border-bottom: 1px solid transparent;
   }
-  .lang button[aria-pressed="true"] { color: var(--storm); border-bottom-color: var(--copper); }
+  .lang button[aria-pressed="true"] { color: var(--storm); font-style: normal; border-bottom-color: var(--copper); }
 
   /* hero: se entra en el anillo */
   .hero { height: 330vh; position: relative; }
@@ -59,63 +61,54 @@
   #halo { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
   .intro {
-    position: absolute; left: 0; right: 0; bottom: max(28px, env(safe-area-inset-bottom));
-    padding: 0 clamp(16px, 5vw, 64px); will-change: opacity, transform;
+    position: absolute; left: 0; right: 0; bottom: max(30px, env(safe-area-inset-bottom));
+    padding: 0 16px; text-align: center; will-change: opacity, transform;
   }
   .intro h1 {
-    font-weight: 260; font-stretch: 125%; font-variation-settings: "wdth" 125;
-    font-size: clamp(50px, min(14.5vw, 12vh), 150px); line-height: .9; letter-spacing: -.035em;
+    font-weight: 400; font-size: clamp(54px, min(15vw, 13vh), 132px); line-height: .92; letter-spacing: -.01em;
   }
-  .intro h1 span { display: block; }
-  .intro p { margin-top: 18px; font-size: clamp(16px, 2.2vw, 20px); max-width: 34ch; color: var(--storm); }
+  .intro h1 .amp { display: block; font-style: italic; font-size: .62em; line-height: 1.1; }
+  .intro .line { margin-top: 18px; font-size: clamp(15px, 2vw, 18px); }
+  @media (orientation: landscape) {
+    .intro h1 { font-size: clamp(48px, 9vh, 104px); }
+    .intro h1 .amp { display: inline; font-size: .75em; padding: 0 .18em; }
+  }
 
   .reveal { position: absolute; left: 0; right: 0; text-align: center; padding: 0 16px; opacity: 0; will-change: opacity; }
-  .reveal .date {
-    font-weight: 300; font-stretch: 125%; font-variation-settings: "wdth" 125;
-    font-size: clamp(28px, 6.6vw, 56px); line-height: 1; letter-spacing: -.02em;
-  }
-  .reveal .place { margin-top: 10px; color: var(--slate); }
+  .reveal .names { font-size: clamp(30px, 6.5vw, 52px); line-height: 1.05; }
+  .reveal .names em { font-size: .8em; }
+  .reveal .date { margin-top: 10px; font-size: clamp(14px, 1.8vw, 17px); color: var(--slate); }
 
-  /* cuenta regresiva: tipográfica, sin adornos */
-  .count {
-    min-height: 100vh; min-height: 100svh;
-    padding: 18vh clamp(16px, 5vw, 64px) 14vh;
-    display: flex; flex-direction: column; justify-content: center;
-    max-width: 1100px; margin: 0 auto;
+  /* cuenta regresiva: una tarjeta, como la invitación */
+  .count { padding: 14vh 16px; display: flex; justify-content: center; }
+  .card {
+    width: 100%; max-width: 900px; background: var(--paper); text-align: center;
+    padding: clamp(44px, 8vw, 84px) clamp(20px, 6vw, 72px);
+    outline: 1px solid rgba(35,40,51,.22); outline-offset: -12px;
+    box-shadow: 0 1px 0 rgba(35,40,51,.06), 0 24px 60px -30px rgba(35,40,51,.25);
   }
-  .count .date { font-size: clamp(18px, 2.4vw, 22px); }
-  .count .until { margin-top: 4px; color: var(--slate); }
-  .rows {
-    margin-top: 28px; display: grid; grid-template-columns: auto 1fr;
-    column-gap: clamp(14px, 2.4vw, 32px); align-items: baseline;
-  }
+  .card .date { font-size: clamp(15px, 1.9vw, 18px); }
+  .card .until { margin-top: clamp(26px, 4vw, 40px); font-style: italic; font-size: clamp(20px, 3vw, 26px); color: var(--slate); }
+  .rows { margin-top: 10px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(4px, 2vw, 24px); }
   .rows .n {
-    text-align: right; font-weight: 200; font-stretch: 125%; font-variation-settings: "wdth" 125;
-    font-size: clamp(64px, 19vw, 190px); line-height: .98; letter-spacing: -.04em;
-    font-variant-numeric: tabular-nums lining-nums;
+    display: block; font-size: clamp(42px, 10.5vw, 84px); line-height: 1.05; font-weight: 400;
+    font-variant-numeric: lining-nums tabular-nums;
   }
-  .rows .u { font-size: clamp(17px, 2.4vw, 24px); color: var(--slate); }
-  .rows .cell { display: contents; }
-  @media (min-width: 900px) {
-    .rows { grid-template-columns: repeat(4, auto); justify-content: start; column-gap: clamp(28px, 4vw, 64px); }
-    .rows .cell { display: flex; flex-direction: column; }
-    .rows .n { text-align: left; font-size: clamp(64px, 9.5vw, 150px); }
-    .rows .u { margin-top: 10px; }
-  }
+  .rows .u { display: block; font-style: italic; font-size: clamp(13px, 2.2vw, 18px); color: var(--slate); }
   .rows .n.s { color: var(--copper); }
-  .count .note { margin-top: 48px; max-width: 46ch; font-size: clamp(17px, 2vw, 20px); }
+  .card .note { margin: clamp(30px, 5vw, 48px) auto 0; max-width: 36ch; font-size: clamp(16px, 1.9vw, 19px); }
+  .card .sign { margin-top: 26px; font-style: italic; font-size: 22px; }
 
   /* cierre */
   .closing { position: relative; height: 100vh; height: 100svh; overflow: hidden; }
   .closing img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
   .closing p {
-    position: absolute; left: 0; right: 0; bottom: max(36px, env(safe-area-inset-bottom));
-    padding: 0 clamp(16px, 5vw, 64px);
-    font-weight: 260; font-stretch: 125%; font-variation-settings: "wdth" 125;
-    font-size: clamp(36px, 9vw, 96px); line-height: .95; letter-spacing: -.03em; max-width: 14ch;
+    position: absolute; left: 0; right: 0; bottom: max(44px, env(safe-area-inset-bottom));
+    padding: 0 16px; text-align: center;
+    font-style: italic; font-size: clamp(32px, 7.5vw, 72px); line-height: 1.05;
   }
 
-  footer { padding: 28px clamp(16px, 5vw, 64px) 36px; color: var(--slate); font-size: 14px; display: flex; justify-content: space-between; gap: 16px; }
+  footer { padding: 30px 16px 40px; text-align: center; color: var(--slate); font-size: 15px; }
 
   @media (prefers-reduced-motion: reduce) {
     .hero { height: 100vh; }
@@ -132,38 +125,41 @@
     <div class="stage" id="stage">
       <img class="bg" id="bg" src="foto.jpg" alt="Julia y Nico" fetchpriority="high">
       <div class="veil" id="veil"></div>
-      <svg id="halo" aria-hidden="true"><circle id="haloCircle" cx="0" cy="0" r="0" fill="none" stroke="#a8603a" stroke-width="1.5"/></svg>
+      <svg id="halo" aria-hidden="true"><circle id="haloCircle" cx="0" cy="0" r="0" fill="none" stroke="#a8603a" stroke-width="1.2"/></svg>
 
       <div class="intro" id="intro">
-        <h1><span>Julia</span><span data-i18n="and">y Nico</span><span data-i18n="marry">se casan</span></h1>
-        <p data-i18n="when">El 9 de octubre de 2027, en Buenos Aires.</p>
+        <h1>Julia<span class="amp">&amp;</span>Nico</h1>
+        <p class="line sc" data-i18n="when">sábado 9 de octubre de 2027, Buenos Aires</p>
       </div>
 
       <div class="reveal" id="reveal">
-        <p class="date" data-i18n="dateShort">9 de octubre de 2027</p>
-        <p class="place">Buenos Aires</p>
+        <p class="names">Julia <em>&amp;</em> Nico</p>
+        <p class="date sc" data-i18n="dateShort">9 de octubre de 2027</p>
       </div>
     </div>
   </section>
 
   <section class="count" id="count" aria-label="Cuenta regresiva">
-    <p class="date" data-i18n="dateLong">Sábado 9 de octubre de 2027</p>
-    <p class="until" data-i18n="until">Faltan</p>
-    <div class="rows" role="timer">
-      <div class="cell"><span class="n" id="d">–</span><span class="u" id="ud"></span></div>
-      <div class="cell"><span class="n" id="h">–</span><span class="u" id="uh"></span></div>
-      <div class="cell"><span class="n" id="m">–</span><span class="u" id="um"></span></div>
-      <div class="cell"><span class="n s" id="s">–</span><span class="u" id="us"></span></div>
+    <div class="card">
+      <p class="date sc" data-i18n="dateLong">Sábado 9 de octubre de 2027</p>
+      <p class="until" data-i18n="until">Faltan</p>
+      <div class="rows" role="timer">
+        <div class="cell"><span class="n" id="d">–</span><span class="u" id="ud"></span></div>
+        <div class="cell"><span class="n" id="h">–</span><span class="u" id="uh"></span></div>
+        <div class="cell"><span class="n" id="m">–</span><span class="u" id="um"></span></div>
+        <div class="cell"><span class="n s" id="s">–</span><span class="u" id="us"></span></div>
+      </div>
+      <p class="note" data-i18n="note">Reservate la fecha. La invitación con todos los detalles llega más adelante.</p>
+      <p class="sign">Julia &amp; Nico</p>
     </div>
-    <p class="note" data-i18n="note">Reservate la fecha. La invitación con todos los detalles llega más adelante.</p>
   </section>
 
   <section class="closing">
     <img src="foto2.jpg" alt="Julia y Nico" loading="lazy">
-    <p data-i18n="closing">Nos vemos en Buenos Aires.</p>
+    <p data-i18n="closing">Te esperamos.</p>
   </section>
 
-  <footer><span>Julia &amp; Nico</span><span>2027</span></footer>
+  <footer>Buenos Aires, 2027</footer>
 
 <script>
   // 9 de octubre de 2027, 00:00 en Buenos Aires (UTC-3). Cambiar acá cuando esté la hora.
@@ -174,18 +170,18 @@
 
   const T = {
     es: {
-      and: "y Nico", marry: "se casan", when: "El 9 de octubre de 2027, en Buenos Aires.",
+      when: "sábado 9 de octubre de 2027, Buenos Aires",
       dateShort: "9 de octubre de 2027", dateLong: "Sábado 9 de octubre de 2027", until: "Faltan",
       units: { d: ["día", "días"], h: ["hora", "horas"], m: ["minuto", "minutos"], s: ["segundo", "segundos"] },
       note: "Reservate la fecha. La invitación con todos los detalles llega más adelante.",
-      closing: "Nos vemos en Buenos Aires.", done: "Es hoy.", alt: "Julia y Nico", region: "Cuenta regresiva"
+      closing: "Te esperamos.", done: "Es hoy.", alt: "Julia y Nico", region: "Cuenta regresiva"
     },
     de: {
-      and: "und Nico", marry: "heiraten", when: "Am 9. Oktober 2027 in Buenos Aires.",
+      when: "Samstag, 9. Oktober 2027, Buenos Aires",
       dateShort: "9. Oktober 2027", dateLong: "Samstag, 9. Oktober 2027", until: "Noch",
       units: { d: ["Tag", "Tage"], h: ["Stunde", "Stunden"], m: ["Minute", "Minuten"], s: ["Sekunde", "Sekunden"] },
       note: "Haltet euch den Tag frei. Die Einladung mit allen Details folgt.",
-      closing: "Wir sehen uns in Buenos Aires.", done: "Heute ist es so weit.", alt: "Julia und Nico", region: "Countdown"
+      closing: "Wir freuen uns auf euch.", done: "Heute ist es so weit.", alt: "Julia und Nico", region: "Countdown"
     }
   };
 
@@ -198,7 +194,6 @@
     document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
     document.querySelectorAll("img").forEach(img => { img.alt = T[lang].alt; });
     document.getElementById("count").setAttribute("aria-label", T[lang].region);
-    document.title = (lang === "de" ? "Julia und Nico heiraten" : "Julia y Nico se casan") + " · 9.10.2027";
     try { localStorage.setItem("lang", lang); } catch (e) {}
     countFrame(true);
   }
