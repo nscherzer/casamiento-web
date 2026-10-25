@@ -60,7 +60,7 @@
   .after .where { color: var(--ink-2); }
   .cue {
     position: absolute; left: 50%; bottom: max(20px, env(safe-area-inset-bottom)); transform: translateX(-50%);
-    background: var(--paper); color: var(--ink); font-size: 14px; font-weight: 500; padding: 8px 14px;
+    color: var(--ink); font-size: 15px; font-weight: 500;
   }
 
   /* cuenta regresiva */
@@ -86,8 +86,8 @@
 </head>
 <body>
   <nav class="lang" aria-label="Idioma / Sprache">
-    <button type="button" data-lang="es" aria-pressed="true">Español</button>
-    <button type="button" data-lang="de" aria-pressed="false">Deutsch</button>
+    <button type="button" data-lang="es" aria-pressed="true" aria-label="Español">ES</button>
+    <button type="button" data-lang="de" aria-pressed="false" aria-label="Deutsch">DE</button>
   </nav>
 
   <section class="ring" id="ring">
