@@ -44,27 +44,6 @@
   }
   .lang button[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--ink); }
 
-  /* portada: como el frente de una invitación */
-  .cover {
-    min-height: 100vh; min-height: 100svh;
-    display: grid; grid-template-rows: auto 1fr; gap: clamp(28px, 5vh, 56px);
-    padding: clamp(72px, 12vh, 120px) var(--gutter) var(--gutter);
-    text-align: center;
-  }
-  .cover .lead { font-size: 17px; color: var(--ink-2); }
-  .cover h1 { margin-top: 10px; font-size: clamp(58px, 15vw, 132px); line-height: 1; letter-spacing: -.01em; }
-  .cover h1 i { font-style: italic; font-weight: 400; }
-  .cover .when { margin-top: 18px; font-size: 18px; }
-  .cover .where { color: var(--ink-2); }
-  .cover figure { position: relative; min-height: 300px; }
-  .cover figure img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; }
-
-  @media (min-width: 900px) and (orientation: landscape) {
-    .cover { grid-template-rows: none; grid-template-columns: 1fr 1fr; align-items: center; padding-top: var(--gutter); gap: var(--gutter); text-align: left; }
-    .cover figure { height: calc(100vh - 2 * var(--gutter)); }
-    .cover h1 span { display: block; }
-  }
-
   /* entrada al anillo: la foto sola, sin texto encima */
   .ring { height: 320vh; position: relative; }
   .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--paper); }
@@ -72,16 +51,33 @@
   .veil { position: absolute; inset: 0; pointer-events: none; }
   #halo { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
+  /* al terminar el zoom: el frente de la invitación, sobre papel */
   .after { position: absolute; left: 0; right: 0; padding: 0 var(--gutter); text-align: center; opacity: 0; }
-  .after .until { font-size: 17px; color: var(--ink-2); }
-  .rows { margin: 6px auto 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 560px; }
-  .rows .n { display: block; font-size: clamp(40px, 10vw, 64px); line-height: 1.1; font-variant-numeric: lining-nums tabular-nums; }
+  .after .lead { font-size: 17px; color: var(--ink-2); }
+  .after h1 { margin-top: 6px; font-size: clamp(52px, min(13vw, 10vh), 104px); line-height: 1; letter-spacing: -.01em; }
+  .after h1 i { font-style: italic; font-weight: 400; }
+  .after .when { margin-top: 14px; font-size: 18px; }
+  .after .where { color: var(--ink-2); }
+  .cue {
+    position: absolute; left: 50%; bottom: max(20px, env(safe-area-inset-bottom)); transform: translateX(-50%);
+    background: var(--paper); color: var(--ink); font-size: 14px; font-weight: 500; padding: 8px 14px;
+  }
+
+  /* cuenta regresiva */
+  .count { padding: clamp(72px, 14vh, 140px) var(--gutter); text-align: center; }
+  .count .until { font-size: 17px; color: var(--ink-2); }
+  .rows { margin: 6px auto 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 620px; }
+  .rows .n { display: block; font-size: clamp(42px, 11vw, 76px); line-height: 1.1; font-variant-numeric: lining-nums tabular-nums; }
   .rows .u { display: block; font-size: 14px; color: var(--ink-2); }
+  .count .note { margin: 40px auto 0; max-width: 38ch; font-size: 18px; }
+
+  /* segunda foto */
+  .photo { padding: 0 var(--gutter); }
+  .photo img { display: block; width: 100%; max-width: 1100px; height: min(88vh, 125vw); margin: 0 auto; object-fit: cover; object-position: 50% 40%; }
 
   /* cierre */
-  .close { padding: clamp(80px, 16vh, 160px) var(--gutter); text-align: center; border-top: 1px solid var(--rule); max-width: 1100px; margin: 0 auto; }
-  .close p { max-width: 38ch; margin: 0 auto; font-size: 18px; }
-  .close .sign { margin-top: 28px; font-size: clamp(34px, 7vw, 56px); line-height: 1.1; }
+  .close { padding: clamp(56px, 10vh, 100px) var(--gutter) 24px; text-align: center; }
+  .close .sign { font-size: clamp(34px, 7vw, 56px); line-height: 1.1; }
   .close .sign i { font-style: italic; font-weight: 400; }
   footer { padding: 0 var(--gutter) 36px; text-align: center; color: var(--ink-2); font-size: 14px; }
 
@@ -94,35 +90,35 @@
     <button type="button" data-lang="de" aria-pressed="false">Deutsch</button>
   </nav>
 
-  <header class="cover">
-    <div>
-      <p class="lead" data-i18n="lead">Nos casamos</p>
-      <h1 class="display"><span>Julia</span> <span><i>&amp;</i> Nico</span></h1>
-      <p class="when" data-i18n="when">Sábado 9 de octubre de 2027</p>
-      <p class="where">Buenos Aires</p>
-    </div>
-    <figure><img src="foto2.jpg" alt="Julia y Nico en las Salinas Grandes" fetchpriority="high"></figure>
-  </header>
-
-  <section class="ring" id="ring" aria-label="Cuenta regresiva">
+  <section class="ring" id="ring">
     <div class="stage" id="stage">
-      <img id="bg" src="foto.jpg" alt="Julia y Nico dentro del anillo de compromiso">
+      <img id="bg" src="foto.jpg" alt="Julia y Nico dentro del anillo de compromiso" fetchpriority="high">
       <div class="veil" id="veil"></div>
       <svg id="halo" aria-hidden="true"><circle id="haloCircle" fill="none" stroke="#a35a33" stroke-width="1.2"/></svg>
+      <p class="cue" id="cue" data-i18n="cue">Deslizá</p>
       <div class="after" id="after">
-        <p class="until" data-i18n="until">Faltan</p>
-        <div class="rows" role="timer">
-          <div><span class="n display" id="d">–</span><span class="u" id="ud"></span></div>
-          <div><span class="n display" id="h">–</span><span class="u" id="uh"></span></div>
-          <div><span class="n display" id="m">–</span><span class="u" id="um"></span></div>
-          <div><span class="n display" id="s">–</span><span class="u" id="us"></span></div>
-        </div>
+        <p class="lead" data-i18n="lead">Nos casamos</p>
+        <h1 class="display">Julia <i>&amp;</i> Nico</h1>
+        <p class="when" data-i18n="when">Sábado 9 de octubre de 2027</p>
+        <p class="where">Buenos Aires</p>
       </div>
     </div>
   </section>
 
+  <section class="count" id="count" aria-label="Cuenta regresiva">
+    <p class="until" data-i18n="until">Faltan</p>
+    <div class="rows" role="timer">
+      <div><span class="n display" id="d">–</span><span class="u" id="ud"></span></div>
+      <div><span class="n display" id="h">–</span><span class="u" id="uh"></span></div>
+      <div><span class="n display" id="m">–</span><span class="u" id="um"></span></div>
+      <div><span class="n display" id="s">–</span><span class="u" id="us"></span></div>
+    </div>
+    <p class="note" data-i18n="note">Reservate la fecha. La invitación con todos los detalles llega más adelante.</p>
+  </section>
+
+  <figure class="photo"><img id="photo2" src="foto2.jpg" alt="Julia y Nico en las Salinas Grandes" loading="lazy"></figure>
+
   <section class="close">
-    <p data-i18n="note">Reservate la fecha. La invitación con todos los detalles llega más adelante.</p>
     <p class="sign display">Julia <i>&amp;</i> Nico</p>
   </section>
 
@@ -137,14 +133,14 @@
 
   const T = {
     es: {
-      lead: "Nos casamos", when: "Sábado 9 de octubre de 2027", until: "Faltan",
+      lead: "Nos casamos", cue: "Deslizá", when: "Sábado 9 de octubre de 2027", until: "Faltan",
       units: { d: ["día", "días"], h: ["hora", "horas"], m: ["minuto", "minutos"], s: ["segundo", "segundos"] },
       note: "Reservate la fecha. La invitación con todos los detalles llega más adelante.",
       footer: "Buenos Aires, octubre de 2027", done: "Es hoy",
       alt1: "Julia y Nico en las Salinas Grandes", alt2: "Julia y Nico dentro del anillo de compromiso", region: "Cuenta regresiva"
     },
     de: {
-      lead: "Wir heiraten", when: "Samstag, 9. Oktober 2027", until: "Noch",
+      lead: "Wir heiraten", cue: "Scrollen", when: "Samstag, 9. Oktober 2027", until: "Noch",
       units: { d: ["Tag", "Tage"], h: ["Stunde", "Stunden"], m: ["Minute", "Minuten"], s: ["Sekunde", "Sekunden"] },
       note: "Haltet euch den Tag frei. Die Einladung mit allen Details folgt.",
       footer: "Buenos Aires, Oktober 2027", done: "Heute ist es so weit",
@@ -159,9 +155,9 @@
     document.documentElement.lang = lang;
     document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = T[lang][el.dataset.i18n]; });
     document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
-    document.querySelector(".cover img").alt = T[lang].alt1;
+    document.getElementById("photo2").alt = T[lang].alt1;
     document.getElementById("bg").alt = T[lang].alt2;
-    document.getElementById("ring").setAttribute("aria-label", T[lang].region);
+    document.getElementById("count").setAttribute("aria-label", T[lang].region);
     try { localStorage.setItem("lang", lang); } catch (e) {}
     countFrame(true);
   }
@@ -170,7 +166,7 @@
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const ring = document.getElementById("ring"), stage = document.getElementById("stage");
   const bg = document.getElementById("bg"), veil = document.getElementById("veil");
-  const after = document.getElementById("after"), halo = document.getElementById("haloCircle");
+  const after = document.getElementById("after"), halo = document.getElementById("haloCircle"), cue = document.getElementById("cue");
   const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
   const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   const lerp = (a, b, t) => a + (b - a) * t;
@@ -185,11 +181,11 @@
     const ox = (vw - PHOTO.w * sc) / 2, oy = (vh - PHOTO.h * sc) * posY;
     const sx = ox + PHOTO.cx * sc, sy = oy + PHOTO.cy * sc, r0 = PHOTO.r * sc;
 
-    // el anillo sube y crece hasta ser un retrato; debajo queda lugar para la cuenta
-    const rEnd = Math.min(vw * .32, vh * .2);
+    // el anillo sube y crece hasta ser un retrato; debajo van los nombres
+    const rEnd = Math.min(vw * .3, vh * .18);
     const z = ease(clamp((p - .05) / .6));
     const s = lerp(1, rEnd / r0, z);
-    const cx = lerp(sx, vw / 2, z), cy = lerp(sy, vh * .36, z);
+    const cx = lerp(sx, vw / 2, z), cy = lerp(sy, vh * .3, z);
     bg.style.transform = `translate(${cx - sx * s}px, ${cy - sy * s}px) scale(${s})`;
 
     const r = r0 * s;
@@ -202,6 +198,7 @@
     halo.setAttribute("transform", `rotate(-90 ${cx} ${cy})`);
 
     after.style.opacity = clamp((p - .68) / .16);
+    cue.style.opacity = 1 - clamp(p / .05);
     after.style.top = `${cy + r + Math.max(28, vh * .045)}px`;
   }
 
@@ -217,7 +214,7 @@
     last = lang + sec;
     el("d").textContent = v.d; el("h").textContent = pad(v.h); el("m").textContent = pad(v.m); el("s").textContent = pad(v.s);
     for (const k of ["d", "h", "m", "s"]) el("u" + k).textContent = T[lang].units[k][v[k] === 1 ? 0 : 1];
-    if (ms === 0) after.querySelector(".until").textContent = T[lang].done;
+    if (ms === 0) document.querySelector("#count .until").textContent = T[lang].done;
   }
 
   document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
