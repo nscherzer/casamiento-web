@@ -20,7 +20,7 @@
     --salt: #f3f4f1;
     --paper: #fbfbf9;
     --storm: #232833;
-    --slate: #5f6573;
+    --slate: #474d5a;
     --copper: #a8603a;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,13 +30,13 @@
     color: var(--storm);
     font-family: "Bodoni Moda", "Didot", "Bodoni 72", serif;
     font-optical-sizing: auto;
-    font-weight: 400;
-    font-size: 18px;
+    font-weight: 500;
+    font-size: 19px;
     line-height: 1.6;
     overflow-x: hidden;
   }
   :focus-visible { outline: 1.5px solid var(--copper); outline-offset: 3px; }
-  .sc { font-variant-caps: all-small-caps; letter-spacing: .14em; }
+  .sc { letter-spacing: .01em; }
 
   /* idioma */
   .lang {
@@ -45,10 +45,10 @@
   }
   .lang button {
     border: 0; background: none; cursor: pointer; color: var(--slate);
-    font: italic 400 15px/1 "Bodoni Moda", serif; padding: 9px 7px 7px;
+    font: 500 16px/1 "Bodoni Moda", serif; padding: 9px 7px 7px;
     border-bottom: 1px solid transparent;
   }
-  .lang button[aria-pressed="true"] { color: var(--storm); font-style: normal; border-bottom-color: var(--copper); }
+  .lang button[aria-pressed="true"] { color: var(--storm); border-bottom-color: var(--copper); }
 
   /* hero: se entra en el anillo */
   .hero { height: 330vh; position: relative; }
@@ -63,21 +63,22 @@
   .intro {
     position: absolute; left: 0; right: 0; bottom: max(30px, env(safe-area-inset-bottom));
     padding: 0 16px; text-align: center; will-change: opacity, transform;
+    text-shadow: 0 0 18px rgba(251,251,249,.95), 0 0 42px rgba(251,251,249,.8);
   }
   .intro h1 {
-    font-weight: 400; font-size: clamp(54px, min(15vw, 13vh), 132px); line-height: .92; letter-spacing: -.01em;
+    font-weight: 600; font-size: clamp(58px, min(16vw, 13vh), 132px); line-height: .92; letter-spacing: 0;
   }
   .intro h1 .amp { display: block; font-style: italic; font-size: .62em; line-height: 1.1; }
-  .intro .line { margin-top: 18px; font-size: clamp(15px, 2vw, 18px); }
+  .intro .line { margin-top: 16px; font-size: clamp(18px, 2.2vw, 22px); font-weight: 600; }
   @media (orientation: landscape) {
     .intro h1 { font-size: clamp(48px, 9vh, 104px); }
     .intro h1 .amp { display: inline; font-size: .75em; padding: 0 .18em; }
   }
 
   .reveal { position: absolute; left: 0; right: 0; text-align: center; padding: 0 16px; opacity: 0; will-change: opacity; }
-  .reveal .names { font-size: clamp(30px, 6.5vw, 52px); line-height: 1.05; }
+  .reveal .names { font-size: clamp(34px, 7vw, 56px); line-height: 1.05; font-weight: 600; }
   .reveal .names em { font-size: .8em; }
-  .reveal .date { margin-top: 10px; font-size: clamp(14px, 1.8vw, 17px); color: var(--slate); }
+  .reveal .date { margin-top: 10px; font-size: clamp(18px, 2vw, 21px); }
 
   /* cuenta regresiva: una tarjeta, como la invitación */
   .count { padding: 14vh 16px; display: flex; justify-content: center; }
@@ -87,17 +88,17 @@
     outline: 1px solid rgba(35,40,51,.22); outline-offset: -12px;
     box-shadow: 0 1px 0 rgba(35,40,51,.06), 0 24px 60px -30px rgba(35,40,51,.25);
   }
-  .card .date { font-size: clamp(15px, 1.9vw, 18px); }
-  .card .until { margin-top: clamp(26px, 4vw, 40px); font-style: italic; font-size: clamp(20px, 3vw, 26px); color: var(--slate); }
+  .card .date { font-size: clamp(18px, 2vw, 21px); font-weight: 600; }
+  .card .until { margin-top: clamp(26px, 4vw, 40px); font-size: clamp(20px, 3vw, 26px); color: var(--slate); }
   .rows { margin-top: 10px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(4px, 2vw, 24px); }
   .rows .n {
-    display: block; font-size: clamp(42px, 10.5vw, 84px); line-height: 1.05; font-weight: 400;
+    display: block; font-size: clamp(38px, 10vw, 84px); line-height: 1.05; font-weight: 500;
     font-variant-numeric: lining-nums tabular-nums;
   }
-  .rows .u { display: block; font-style: italic; font-size: clamp(13px, 2.2vw, 18px); color: var(--slate); }
+  .rows .u { display: block; font-size: clamp(15px, 2.4vw, 19px); color: var(--slate); }
   .rows .n.s { color: var(--copper); }
-  .card .note { margin: clamp(30px, 5vw, 48px) auto 0; max-width: 36ch; font-size: clamp(16px, 1.9vw, 19px); }
-  .card .sign { margin-top: 26px; font-style: italic; font-size: 22px; }
+  .card .note { margin: clamp(30px, 5vw, 48px) auto 0; max-width: 34ch; font-size: clamp(18px, 2vw, 21px); line-height: 1.55; }
+  .card .sign { margin-top: 26px; font-style: italic; font-size: 24px; font-weight: 600; }
 
   /* cierre */
   .closing { position: relative; height: 100vh; height: 100svh; overflow: hidden; }
@@ -105,10 +106,11 @@
   .closing p {
     position: absolute; left: 0; right: 0; bottom: max(44px, env(safe-area-inset-bottom));
     padding: 0 16px; text-align: center;
-    font-style: italic; font-size: clamp(32px, 7.5vw, 72px); line-height: 1.05;
+    font-style: italic; font-weight: 600; font-size: clamp(36px, 8vw, 72px); line-height: 1.05;
+    text-shadow: 0 0 18px rgba(251,251,249,.95), 0 0 42px rgba(251,251,249,.8);
   }
 
-  footer { padding: 30px 16px 40px; text-align: center; color: var(--slate); font-size: 15px; }
+  footer { padding: 30px 16px 40px; text-align: center; color: var(--slate); font-size: 17px; }
 
   @media (prefers-reduced-motion: reduce) {
     .hero { height: 100vh; }
@@ -129,7 +131,7 @@
 
       <div class="intro" id="intro">
         <h1>Julia<span class="amp">&amp;</span>Nico</h1>
-        <p class="line sc" data-i18n="when">sábado 9 de octubre de 2027, Buenos Aires</p>
+        <p class="line"><span data-i18n="when">sábado 9 de octubre de 2027</span><br>Buenos Aires</p>
       </div>
 
       <div class="reveal" id="reveal">
@@ -170,14 +172,14 @@
 
   const T = {
     es: {
-      when: "sábado 9 de octubre de 2027, Buenos Aires",
+      when: "Sábado 9 de octubre de 2027",
       dateShort: "9 de octubre de 2027", dateLong: "Sábado 9 de octubre de 2027", until: "Faltan",
       units: { d: ["día", "días"], h: ["hora", "horas"], m: ["minuto", "minutos"], s: ["segundo", "segundos"] },
       note: "Reservate la fecha. La invitación con todos los detalles llega más adelante.",
       closing: "Te esperamos.", done: "Es hoy.", alt: "Julia y Nico", region: "Cuenta regresiva"
     },
     de: {
-      when: "Samstag, 9. Oktober 2027, Buenos Aires",
+      when: "Samstag, 9. Oktober 2027",
       dateShort: "9. Oktober 2027", dateLong: "Samstag, 9. Oktober 2027", until: "Noch",
       units: { d: ["Tag", "Tage"], h: ["Stunde", "Stunden"], m: ["Minute", "Minuten"], s: ["Sekunde", "Sekunden"] },
       note: "Haltet euch den Tag frei. Die Einladung mit allen Details folgt.",
