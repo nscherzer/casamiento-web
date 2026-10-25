@@ -8,113 +8,84 @@
 <meta property="og:title" content="Julia &amp; Nico">
 <meta property="og:description" content="Sábado 9 de octubre de 2027, Buenos Aires">
 <meta property="og:image" content="https://nscherzer.github.io/casamiento-web/foto.jpg">
-<meta name="theme-color" content="#f3f4f1">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2236%22 fill=%22none%22 stroke=%22%23a8603a%22 stroke-width=%2210%22/%3E%3C/svg%3E">
+<meta name="theme-color" content="#f4f4f1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2236%22 fill=%22none%22 stroke=%22%23a35a33%22 stroke-width=%2210%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  /* Formal, como una invitación grabada: una didona (Bodoni Moda), composición centrada,
-     y la paleta de la foto: blanco sal, tinta de tormenta y el cobre del anillo. */
+  /* Regla de la casa: la letra nunca va sobre la foto. Texto sobre papel, foto limpia.
+     Bodoni Moda solo en tamaños grandes (nombres, números); Hanken Grotesk para todo lo chico. */
   :root {
-    --salt: #f3f4f1;
-    --paper: #fbfbf9;
-    --storm: #232833;
-    --slate: #474d5a;
-    --copper: #a8603a;
+    --paper: #f4f4f1;
+    --ink: #1f2430;
+    --ink-2: #4a5060;
+    --rule: #cfd0cc;
+    --copper: #a35a33;
+    --gutter: clamp(20px, 6vw, 72px);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; }
   body {
-    background: var(--salt);
-    color: var(--storm);
-    font-family: "Bodoni Moda", "Didot", "Bodoni 72", serif;
-    font-optical-sizing: auto;
-    font-weight: 500;
-    font-size: 19px;
-    line-height: 1.6;
+    background: var(--paper); color: var(--ink);
+    font-family: "Hanken Grotesk", system-ui, sans-serif; font-weight: 400;
+    font-size: 17px; line-height: 1.6;
     overflow-x: hidden;
   }
-  :focus-visible { outline: 1.5px solid var(--copper); outline-offset: 3px; }
-  .sc { letter-spacing: .01em; }
+  .display { font-family: "Bodoni Moda", "Didot", serif; font-optical-sizing: auto; font-weight: 500; }
+  :focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
 
   /* idioma */
-  .lang {
-    position: fixed; top: max(12px, env(safe-area-inset-top)); right: 12px; z-index: 50;
-    display: flex; background: var(--paper); padding: 2px 6px;
-  }
+  .lang { position: fixed; top: max(10px, env(safe-area-inset-top)); right: 10px; z-index: 50; display: flex; background: var(--paper); padding: 0 6px; }
   .lang button {
-    border: 0; background: none; cursor: pointer; color: var(--slate);
-    font: 500 16px/1 "Bodoni Moda", serif; padding: 9px 7px 7px;
-    border-bottom: 1px solid transparent;
+    border: 0; background: none; cursor: pointer; color: var(--ink-2);
+    font: 500 14px/1 "Hanken Grotesk", sans-serif; padding: 12px 8px 10px;
+    border-bottom: 1.5px solid transparent;
   }
-  .lang button[aria-pressed="true"] { color: var(--storm); border-bottom-color: var(--copper); }
+  .lang button[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--ink); }
 
-  /* hero: se entra en el anillo */
-  .hero { height: 330vh; position: relative; }
-  .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: #c7cad0; }
-  .stage img.bg {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; will-change: transform; transform-origin: 0 0;
+  /* portada: como el frente de una invitación */
+  .cover {
+    min-height: 100vh; min-height: 100svh;
+    display: grid; grid-template-rows: auto 1fr; gap: clamp(28px, 5vh, 56px);
+    padding: clamp(72px, 12vh, 120px) var(--gutter) var(--gutter);
+    text-align: center;
   }
+  .cover .lead { font-size: 17px; color: var(--ink-2); }
+  .cover h1 { margin-top: 10px; font-size: clamp(58px, 15vw, 132px); line-height: 1; letter-spacing: -.01em; }
+  .cover h1 i { font-style: italic; font-weight: 400; }
+  .cover .when { margin-top: 18px; font-size: 18px; }
+  .cover .where { color: var(--ink-2); }
+  .cover figure { position: relative; min-height: 300px; }
+  .cover figure img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; }
+
+  @media (min-width: 900px) and (orientation: landscape) {
+    .cover { grid-template-rows: none; grid-template-columns: 1fr 1fr; align-items: center; padding-top: var(--gutter); gap: var(--gutter); text-align: left; }
+    .cover figure { height: calc(100vh - 2 * var(--gutter)); }
+    .cover h1 span { display: block; }
+  }
+
+  /* entrada al anillo: la foto sola, sin texto encima */
+  .ring { height: 320vh; position: relative; }
+  .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--paper); }
+  .stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 0 0; will-change: transform; }
   .veil { position: absolute; inset: 0; pointer-events: none; }
   #halo { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
-  .intro {
-    position: absolute; left: 0; right: 0; bottom: max(30px, env(safe-area-inset-bottom));
-    padding: 0 16px; text-align: center; will-change: opacity, transform;
-    text-shadow: 0 0 18px rgba(251,251,249,.95), 0 0 42px rgba(251,251,249,.8);
-  }
-  .intro h1 {
-    font-weight: 600; font-size: clamp(58px, min(16vw, 13vh), 132px); line-height: .92; letter-spacing: 0;
-  }
-  .intro h1 .amp { display: block; font-style: italic; font-size: .62em; line-height: 1.1; }
-  .intro .line { margin-top: 16px; font-size: clamp(18px, 2.2vw, 22px); font-weight: 600; }
-  @media (orientation: landscape) {
-    .intro h1 { font-size: clamp(48px, 9vh, 104px); }
-    .intro h1 .amp { display: inline; font-size: .75em; padding: 0 .18em; }
-  }
-
-  .reveal { position: absolute; left: 0; right: 0; text-align: center; padding: 0 16px; opacity: 0; will-change: opacity; }
-  .reveal .names { font-size: clamp(34px, 7vw, 56px); line-height: 1.05; font-weight: 600; }
-  .reveal .names em { font-size: .8em; }
-  .reveal .date { margin-top: 10px; font-size: clamp(18px, 2vw, 21px); }
-
-  /* cuenta regresiva: una tarjeta, como la invitación */
-  .count { padding: 14vh 16px; display: flex; justify-content: center; }
-  .card {
-    width: 100%; max-width: 900px; background: var(--paper); text-align: center;
-    padding: clamp(44px, 8vw, 84px) clamp(20px, 6vw, 72px);
-    outline: 1px solid rgba(35,40,51,.22); outline-offset: -12px;
-    box-shadow: 0 1px 0 rgba(35,40,51,.06), 0 24px 60px -30px rgba(35,40,51,.25);
-  }
-  .card .date { font-size: clamp(18px, 2vw, 21px); font-weight: 600; }
-  .card .until { margin-top: clamp(26px, 4vw, 40px); font-size: clamp(20px, 3vw, 26px); color: var(--slate); }
-  .rows { margin-top: 10px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(4px, 2vw, 24px); }
-  .rows .n {
-    display: block; font-size: clamp(38px, 10vw, 84px); line-height: 1.05; font-weight: 500;
-    font-variant-numeric: lining-nums tabular-nums;
-  }
-  .rows .u { display: block; font-size: clamp(15px, 2.4vw, 19px); color: var(--slate); }
-  .rows .n.s { color: var(--copper); }
-  .card .note { margin: clamp(30px, 5vw, 48px) auto 0; max-width: 34ch; font-size: clamp(18px, 2vw, 21px); line-height: 1.55; }
-  .card .sign { margin-top: 26px; font-style: italic; font-size: 24px; font-weight: 600; }
+  .after { position: absolute; left: 0; right: 0; padding: 0 var(--gutter); text-align: center; opacity: 0; }
+  .after .until { font-size: 17px; color: var(--ink-2); }
+  .rows { margin: 6px auto 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 560px; }
+  .rows .n { display: block; font-size: clamp(40px, 10vw, 64px); line-height: 1.1; font-variant-numeric: lining-nums tabular-nums; }
+  .rows .u { display: block; font-size: 14px; color: var(--ink-2); }
 
   /* cierre */
-  .closing { position: relative; height: 100vh; height: 100svh; overflow: hidden; }
-  .closing img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
-  .closing p {
-    position: absolute; left: 0; right: 0; bottom: max(44px, env(safe-area-inset-bottom));
-    padding: 0 16px; text-align: center;
-    font-style: italic; font-weight: 600; font-size: clamp(36px, 8vw, 72px); line-height: 1.05;
-    text-shadow: 0 0 18px rgba(251,251,249,.95), 0 0 42px rgba(251,251,249,.8);
-  }
+  .close { padding: clamp(80px, 16vh, 160px) var(--gutter); text-align: center; border-top: 1px solid var(--rule); max-width: 1100px; margin: 0 auto; }
+  .close p { max-width: 38ch; margin: 0 auto; font-size: 18px; }
+  .close .sign { margin-top: 28px; font-size: clamp(34px, 7vw, 56px); line-height: 1.1; }
+  .close .sign i { font-style: italic; font-weight: 400; }
+  footer { padding: 0 var(--gutter) 36px; text-align: center; color: var(--ink-2); font-size: 14px; }
 
-  footer { padding: 30px 16px 40px; text-align: center; color: var(--slate); font-size: 17px; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero { height: 100vh; }
-  }
+  @media (prefers-reduced-motion: reduce) { .ring { height: 100vh; } }
 </style>
 </head>
 <body>
@@ -123,45 +94,39 @@
     <button type="button" data-lang="de" aria-pressed="false">Deutsch</button>
   </nav>
 
-  <section class="hero" id="hero">
+  <header class="cover">
+    <div>
+      <p class="lead" data-i18n="lead">Nos casamos</p>
+      <h1 class="display"><span>Julia</span> <span><i>&amp;</i> Nico</span></h1>
+      <p class="when" data-i18n="when">Sábado 9 de octubre de 2027</p>
+      <p class="where">Buenos Aires</p>
+    </div>
+    <figure><img src="foto2.jpg" alt="Julia y Nico en las Salinas Grandes" fetchpriority="high"></figure>
+  </header>
+
+  <section class="ring" id="ring" aria-label="Cuenta regresiva">
     <div class="stage" id="stage">
-      <img class="bg" id="bg" src="foto.jpg" alt="Julia y Nico" fetchpriority="high">
+      <img id="bg" src="foto.jpg" alt="Julia y Nico dentro del anillo de compromiso">
       <div class="veil" id="veil"></div>
-      <svg id="halo" aria-hidden="true"><circle id="haloCircle" cx="0" cy="0" r="0" fill="none" stroke="#a8603a" stroke-width="1.2"/></svg>
-
-      <div class="intro" id="intro">
-        <h1>Julia<span class="amp">&amp;</span>Nico</h1>
-        <p class="line"><span data-i18n="when">sábado 9 de octubre de 2027</span><br>Buenos Aires</p>
-      </div>
-
-      <div class="reveal" id="reveal">
-        <p class="names">Julia <em>&amp;</em> Nico</p>
-        <p class="date sc" data-i18n="dateShort">9 de octubre de 2027</p>
+      <svg id="halo" aria-hidden="true"><circle id="haloCircle" fill="none" stroke="#a35a33" stroke-width="1.2"/></svg>
+      <div class="after" id="after">
+        <p class="until" data-i18n="until">Faltan</p>
+        <div class="rows" role="timer">
+          <div><span class="n display" id="d">–</span><span class="u" id="ud"></span></div>
+          <div><span class="n display" id="h">–</span><span class="u" id="uh"></span></div>
+          <div><span class="n display" id="m">–</span><span class="u" id="um"></span></div>
+          <div><span class="n display" id="s">–</span><span class="u" id="us"></span></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="count" id="count" aria-label="Cuenta regresiva">
-    <div class="card">
-      <p class="date sc" data-i18n="dateLong">Sábado 9 de octubre de 2027</p>
-      <p class="until" data-i18n="until">Faltan</p>
-      <div class="rows" role="timer">
-        <div class="cell"><span class="n" id="d">–</span><span class="u" id="ud"></span></div>
-        <div class="cell"><span class="n" id="h">–</span><span class="u" id="uh"></span></div>
-        <div class="cell"><span class="n" id="m">–</span><span class="u" id="um"></span></div>
-        <div class="cell"><span class="n s" id="s">–</span><span class="u" id="us"></span></div>
-      </div>
-      <p class="note" data-i18n="note">Reservate la fecha. La invitación con todos los detalles llega más adelante.</p>
-      <p class="sign">Julia &amp; Nico</p>
-    </div>
+  <section class="close">
+    <p data-i18n="note">Reservate la fecha. La invitación con todos los detalles llega más adelante.</p>
+    <p class="sign display">Julia <i>&amp;</i> Nico</p>
   </section>
 
-  <section class="closing">
-    <img src="foto2.jpg" alt="Julia y Nico" loading="lazy">
-    <p data-i18n="closing">Te esperamos.</p>
-  </section>
-
-  <footer>Buenos Aires, 2027</footer>
+  <footer data-i18n="footer">Buenos Aires, octubre de 2027</footer>
 
 <script>
   // 9 de octubre de 2027, 00:00 en Buenos Aires (UTC-3). Cambiar acá cuando esté la hora.
@@ -172,18 +137,18 @@
 
   const T = {
     es: {
-      when: "Sábado 9 de octubre de 2027",
-      dateShort: "9 de octubre de 2027", dateLong: "Sábado 9 de octubre de 2027", until: "Faltan",
+      lead: "Nos casamos", when: "Sábado 9 de octubre de 2027", until: "Faltan",
       units: { d: ["día", "días"], h: ["hora", "horas"], m: ["minuto", "minutos"], s: ["segundo", "segundos"] },
       note: "Reservate la fecha. La invitación con todos los detalles llega más adelante.",
-      closing: "Te esperamos.", done: "Es hoy.", alt: "Julia y Nico", region: "Cuenta regresiva"
+      footer: "Buenos Aires, octubre de 2027", done: "Es hoy",
+      alt1: "Julia y Nico en las Salinas Grandes", alt2: "Julia y Nico dentro del anillo de compromiso", region: "Cuenta regresiva"
     },
     de: {
-      when: "Samstag, 9. Oktober 2027",
-      dateShort: "9. Oktober 2027", dateLong: "Samstag, 9. Oktober 2027", until: "Noch",
+      lead: "Wir heiraten", when: "Samstag, 9. Oktober 2027", until: "Noch",
       units: { d: ["Tag", "Tage"], h: ["Stunde", "Stunden"], m: ["Minute", "Minuten"], s: ["Sekunde", "Sekunden"] },
       note: "Haltet euch den Tag frei. Die Einladung mit allen Details folgt.",
-      closing: "Wir freuen uns auf euch.", done: "Heute ist es so weit.", alt: "Julia und Nico", region: "Countdown"
+      footer: "Buenos Aires, Oktober 2027", done: "Heute ist es so weit",
+      alt1: "Julia und Nico in den Salinas Grandes", alt2: "Julia und Nico im Verlobungsring", region: "Countdown"
     }
   };
 
@@ -194,56 +159,50 @@
     document.documentElement.lang = lang;
     document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = T[lang][el.dataset.i18n]; });
     document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
-    document.querySelectorAll("img").forEach(img => { img.alt = T[lang].alt; });
-    document.getElementById("count").setAttribute("aria-label", T[lang].region);
+    document.querySelector(".cover img").alt = T[lang].alt1;
+    document.getElementById("bg").alt = T[lang].alt2;
+    document.getElementById("ring").setAttribute("aria-label", T[lang].region);
     try { localStorage.setItem("lang", lang); } catch (e) {}
     countFrame(true);
   }
 
-  /* hero */
+  /* entrada al anillo */
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const hero = document.getElementById("hero"), stage = document.getElementById("stage");
+  const ring = document.getElementById("ring"), stage = document.getElementById("stage");
   const bg = document.getElementById("bg"), veil = document.getElementById("veil");
-  const intro = document.getElementById("intro"), reveal = document.getElementById("reveal");
-  const halo = document.getElementById("haloCircle");
+  const after = document.getElementById("after"), halo = document.getElementById("haloCircle");
   const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
   const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   const lerp = (a, b, t) => a + (b - a) * t;
 
-  function heroFrame() {
+  function ringFrame() {
     const vw = innerWidth, vh = stage.clientHeight;
-    const p = reduce ? 0 : clamp(-hero.getBoundingClientRect().top / (hero.offsetHeight - vh));
+    const p = reduce ? 1 : clamp(-ring.getBoundingClientRect().top / (ring.offsetHeight - vh));
 
-    // dónde cae el anillo con object-fit: cover (en apaisado se muestra más cielo)
     const sc = Math.max(vw / PHOTO.w, vh / PHOTO.h);
-    const posY = vw > vh ? .3 : .5;
+    const posY = vw > vh ? .38 : .5;
     bg.style.objectPosition = `50% ${posY * 100}%`;
     const ox = (vw - PHOTO.w * sc) / 2, oy = (vh - PHOTO.h * sc) * posY;
     const sx = ox + PHOTO.cx * sc, sy = oy + PHOTO.cy * sc, r0 = PHOTO.r * sc;
 
-    // el anillo viaja al centro y crece
-    const rEnd = Math.min(vw * .36, vh * .25);
-    const z = ease(clamp((p - .06) / .64));
+    // el anillo sube y crece hasta ser un retrato; debajo queda lugar para la cuenta
+    const rEnd = Math.min(vw * .32, vh * .2);
+    const z = ease(clamp((p - .05) / .6));
     const s = lerp(1, rEnd / r0, z);
-    const cx = lerp(sx, vw / 2, z), cy = lerp(sy, vh * .44, z);
+    const cx = lerp(sx, vw / 2, z), cy = lerp(sy, vh * .36, z);
     bg.style.transform = `translate(${cx - sx * s}px, ${cy - sy * s}px) scale(${s})`;
 
-    // todo lo que está afuera del anillo se vuelve sal
     const r = r0 * s;
-    const fog = ease(clamp((p - .22) / .48));
-    veil.style.background = `radial-gradient(circle at ${cx}px ${cy}px, rgba(243,244,241,0) ${r}px, rgba(243,244,241,${fog}) ${lerp(r * 3, r + 1, fog)}px)`;
+    const fog = ease(clamp((p - .2) / .45));
+    veil.style.background = `radial-gradient(circle at ${cx}px ${cy}px, rgba(244,244,241,0) ${r}px, rgba(244,244,241,${fog}) ${lerp(r * 3, r + 1, fog)}px)`;
 
-    // una línea de cobre cierra el círculo
-    const hr = r + 9, circ = 2 * Math.PI * hr, h = clamp((p - .6) / .25);
+    const hr = r + 8, circ = 2 * Math.PI * hr, h = clamp((p - .55) / .25);
     halo.setAttribute("cx", cx); halo.setAttribute("cy", cy); halo.setAttribute("r", hr);
     halo.setAttribute("stroke-dasharray", circ); halo.setAttribute("stroke-dashoffset", circ * (1 - h));
     halo.setAttribute("transform", `rotate(-90 ${cx} ${cy})`);
 
-    const io = 1 - clamp(p / .14);
-    intro.style.opacity = io; intro.style.transform = `translateY(${p * 80}px)`;
-    intro.style.visibility = io <= 0 ? "hidden" : "visible";
-    reveal.style.opacity = clamp((p - .74) / .16);
-    reveal.style.top = `${cy + r + 30}px`;
+    after.style.opacity = clamp((p - .68) / .16);
+    after.style.top = `${cy + r + Math.max(28, vh * .045)}px`;
   }
 
   /* cuenta regresiva */
@@ -254,12 +213,11 @@
     const ms = Math.max(0, TARGET - Date.now());
     const sec = Math.floor(ms / 1000);
     const v = { d: Math.floor(sec / 86400), h: Math.floor(sec % 86400 / 3600), m: Math.floor(sec % 3600 / 60), s: sec % 60 };
-    const key = lang + sec;
-    if (key === last && !force) return;
-    last = key;
+    if (lang + sec === last && !force) return;
+    last = lang + sec;
     el("d").textContent = v.d; el("h").textContent = pad(v.h); el("m").textContent = pad(v.m); el("s").textContent = pad(v.s);
     for (const k of ["d", "h", "m", "s"]) el("u" + k).textContent = T[lang].units[k][v[k] === 1 ? 0 : 1];
-    if (ms === 0) el("count").querySelector(".until").textContent = T[lang].done;
+    if (ms === 0) after.querySelector(".until").textContent = T[lang].done;
   }
 
   document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
@@ -267,7 +225,7 @@
   try { saved = localStorage.getItem("lang"); } catch (e) {}
   setLang(new URLSearchParams(location.search).get("lang") || saved || ((navigator.language || "").toLowerCase().startsWith("de") ? "de" : "es"));
 
-  function loop() { heroFrame(); countFrame(); requestAnimationFrame(loop); }
+  function loop() { ringFrame(); countFrame(); requestAnimationFrame(loop); }
   requestAnimationFrame(loop);
 </script>
 </body>
