@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Julia &amp; Nico · 9.10.2027</title>
+<meta name="description" content="Julia y Nico se casan el sábado 9 de octubre de 2027 en Buenos Aires. Julia und Nico heiraten.">
+<meta property="og:title" content="Julia &amp; Nico">
+<meta property="og:description" content="Sábado 9 de octubre de 2027, Buenos Aires">
+<meta property="og:image" content="https://nscherzer.github.io/casamiento-web/foto.jpg">
+<meta name="theme-color" content="#f4f4f1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2236%22 fill=%22none%22 stroke=%22%23a35a33%22 stroke-width=%2210%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Variante "foto en 3D": foto.jpg + un mapa de profundidad hecho a mano (depth.png).
+     Un shader separa cielo, anillo y salar y los mueve a distinta velocidad.
+     Regla de la casa: la letra nunca va sobre la foto. */
+  :root {
+    --paper: #f4f4f1;
+    --ink: #1f2430;
+    --ink-2: #4a5060;
+    --rule: #cfd0cc;
+    --copper: #a35a33;
+    --gutter: clamp(20px, 6vw, 72px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: "Hanken Grotesk", system-ui, sans-serif; font-weight: 400;
+    font-size: 17px; line-height: 1.6;
+    overflow-x: hidden;
+  }
+  .display { font-family: "Bodoni Moda", "Didot", serif; font-optical-sizing: auto; font-weight: 500; }
+  :focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
+
+  /* idioma */
+  .lang { position: fixed; top: max(10px, env(safe-area-inset-top)); right: 10px; z-index: 50; display: flex; background: var(--paper); padding: 0 6px; }
+  .lang button {
+    border: 0; background: none; cursor: pointer; color: var(--ink-2);
+    font: 500 14px/1 "Hanken Grotesk", sans-serif; padding: 12px 8px 10px;
+    border-bottom: 1.5px solid transparent;
+  }
+  .lang button[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+
+  /* entrada al anillo */
+  .ring { height: 340vh; position: relative; }
+  .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--paper); }
+  .stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 0 0; will-change: transform; }
+  #gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity .6s ease; }
+  .stage.gl #gl { opacity: 1; }
+  .veil { position: absolute; inset: 0; pointer-events: none; }
+  #halo { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  .after { position: absolute; left: 0; right: 0; padding: 0 var(--gutter); text-align: center; opacity: 0; }
+  .after .lead { font-size: 17px; color: var(--ink-2); }
+  .after h1 { margin-top: 6px; font-size: clamp(52px, min(13vw, 10vh), 104px); line-height: 1; letter-spacing: -.01em; }
+  .after h1 i { font-style: italic; font-weight: 400; color: var(--copper); }
+  .after .when { margin-top: 14px; font-size: 18px; }
+  .after .where { color: var(--ink-2); }
+  .after > * { will-change: transform, opacity; }
+
+  .cue {
+    position: absolute; left: 50%; bottom: max(22px, env(safe-area-inset-bottom)); transform: translateX(-50%);
+    display: flex; align-items: center; gap: 10px;
+    color: var(--ink); font-size: 14px; font-weight: 500; line-height: 1; letter-spacing: .04em;
+    background: var(--paper); padding: 9px 16px; border-radius: 999px;
+  }
+  .cue::after { content: ""; width: 1px; height: 14px; background: var(--ink); transform-origin: top; animation: drip 2.4s cubic-bezier(.6,0,.3,1) infinite; }
+  @keyframes drip { 0% { transform: scaleY(0); } 45% { transform: scaleY(1); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+  /* cuenta regresiva */
+  .count { padding: clamp(72px, 14vh, 140px) var(--gutter); text-align: center; }
+  .count .until { font-size: 17px; color: var(--ink-2); }
+  .rows { margin: 6px auto 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 620px; }
+  .rows .n { display: block; font-size: clamp(42px, 11vw, 76px); line-height: 1.1; font-variant-numeric: lining-nums tabular-nums; }
+  .rows .u { display: block; font-size: 14px; color: var(--ink-2); }
+  .count .note { margin: 40px auto 0; max-width: 38ch; font-size: 18px; }
+
+  /* segunda foto: una ventana con un poco de profundidad al pasar */
+  .photo { padding: 0 var(--gutter); }
+  .photo .win { position: relative; overflow: hidden; width: 100%; max-width: 1100px; height: min(88vh, 125vw); margin: 0 auto; }
+  .photo img { position: absolute; left: 0; top: -6%; width: 100%; height: 112%; object-fit: cover; object-position: 50% 40%; will-change: transform; }
+
+  /* cierre */
+  .close { padding: clamp(56px, 10vh, 100px) var(--gutter) 24px; text-align: center; }
+  .close .sign { font-size: clamp(34px, 7vw, 56px); line-height: 1.1; }
+  .close .sign i { font-style: italic; font-weight: 400; color: var(--copper); }
+  footer { padding: 0 var(--gutter) 36px; text-align: center; color: var(--ink-2); font-size: 14px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ring { height: 100vh; }
+    .cue::after { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <nav class="lang" aria-label="Idioma / Sprache">
+    <button type="button" data-lang="es" aria-pressed="true" aria-label="Español">ES</button>
+    <button type="button" data-lang="de" aria-pressed="false" aria-label="Deutsch">DE</button>
+  </nav>
+
+  <section class="ring" id="ring">
+    <div class="stage" id="stage">
+      <img id="bg" src="../foto.jpg" alt="Julia y Nico dentro del anillo de compromiso" fetchpriority="high">
+      <canvas id="gl" aria-hidden="true"></canvas>
+      <div class="veil" id="veil"></div>
+      <svg id="halo" aria-hidden="true"><circle id="haloCircle" fill="none" stroke="#a35a33" stroke-width="1.2"/></svg>
+      <p class="cue" id="cue"><span data-i18n="cue">Deslizá</span></p>
+      <div class="after" id="after">
+        <p class="lead" data-i18n="lead">Nos casamos</p>
+        <h1 class="display">Julia <i>&amp;</i> Nico</h1>
+        <p class="when" data-i18n="when">Sábado 9 de octubre de 2027</p>
+        <p class="where">Buenos Aires</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="count" id="count" aria-label="Cuenta regresiva">
+    <p class="until" data-i18n="until">Faltan</p>
+    <div class="rows" role="timer">
+      <div><span class="n display" id="d">–</span><span class="u" id="ud"></span></div>
+      <div><span class="n display" id="h">–</span><span class="u" id="uh"></span></div>
+      <div><span class="n display" id="m">–</span><span class="u" id="um"></span></div>
+      <div><span class="n display" id="s">–</span><span class="u" id="us"></span></div>
+    </div>
+    <p class="note" data-i18n="note">Reservate la fecha. La invitación con todos los detalles llega más adelante.</p>
+  </section>
+
+  <figure class="photo"><div class="win" id="win"><img id="photo2" src="../foto2.jpg" alt="Julia y Nico en las Salinas Grandes" loading="lazy"></div></figure>
+
+  <section class="close">
+    <p class="sign display">Julia <i>&amp;</i> Nico</p>
+  </section>
+
+  <footer data-i18n="footer">Buenos Aires, octubre de 2027</footer>
+
+<script>
+  // 9 de octubre de 2027, 00:00 en Buenos Aires (UTC-3).
+  const TARGET = new Date("2027-10-09T00:00:00-03:00");
+
+  // Anillo en foto.jpg (2160x2880): centro y radio exterior, en píxeles de la foto.
+  const PHOTO = { w: 2160, h: 2880, cx: 1177, cy: 1243, r: 172 };
+
+  const T = {
+    es: {
+      lead: "Nos casamos", cue: "Deslizá", when: "Sábado 9 de octubre de 2027", until: "Faltan",
+      units: { d: ["día", "días"], h: ["hora", "horas"], m: ["minuto", "minutos"], s: ["segundo", "segundos"] },
+      note: "Reservate la fecha. La invitación con todos los detalles llega más adelante.",
+      footer: "Buenos Aires, octubre de 2027", done: "Es hoy",
+      alt1: "Julia y Nico en las Salinas Grandes", alt2: "Julia y Nico dentro del anillo de compromiso", region: "Cuenta regresiva"
+    },
+    de: {
+      lead: "Wir heiraten", cue: "Scrollen", when: "Samstag, 9. Oktober 2027", until: "Noch",
+      units: { d: ["Tag", "Tage"], h: ["Stunde", "Stunden"], m: ["Minute", "Minuten"], s: ["Sekunde", "Sekunden"] },
+      note: "Haltet euch den Tag frei. Die Einladung mit allen Details folgt.",
+      footer: "Buenos Aires, Oktober 2027", done: "Heute ist es so weit",
+      alt1: "Julia und Nico in den Salinas Grandes", alt2: "Julia und Nico im Verlobungsring", region: "Countdown"
+    }
+  };
+
+  /* idioma */
+  let lang = "es";
+  function setLang(l) {
+    lang = T[l] ? l : "es";
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = T[lang][el.dataset.i18n]; });
+    document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+    document.getElementById("photo2").alt = T[lang].alt1;
+    document.getElementById("bg").alt = T[lang].alt2;
+    document.getElementById("count").setAttribute("aria-label", T[lang].region);
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+    countFrame(true);
+  }
+
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ring = document.getElementById("ring"), stage = document.getElementById("stage");
+  const bg = document.getElementById("bg"), veil = document.getElementById("veil");
+  const after = document.getElementById("after"), halo = document.getElementById("haloCircle"), cue = document.getElementById("cue");
+  const canvas = document.getElementById("gl");
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  const lerp = (a, b, t) => a + (b - a) * t;
+
+  /* ---------- profundidad: WebGL ---------- */
+  const VS = `attribute vec2 a; void main(){ gl_Position = vec4(a, 0., 1.); }`;
+  const FS = `
+precision highp float;
+uniform sampler2D uImg, uDep;
+uniform vec2 uView;     // viewport en px CSS
+uniform float uDpr;
+uniform vec2 uImgSz;    // 2160x2880
+uniform vec2 uSrc;      // centro del anillo en la foto
+uniform vec2 uC;        // centro del anillo en pantalla
+uniform float uS;       // escala foto->pantalla del plano del anillo
+uniform float uRel;     // cuánto lleva de zoom (s / s0)
+uniform vec2 uTilt;     // inclinación / mouse, en px
+uniform float uDrop;    // desplazamiento vertical extra del frente
+uniform float uFog;     // fundido a papel lejos del anillo (lo hace el veil)
+
+vec2 srcAt(vec2 p, float d) {
+  // el salar es un plano que viene hacia la cámara: su borde está en el plano del anillo
+  // y lo de abajo se agranda más rápido. Cielo, anillo y pareja quedan en el plano del zoom.
+  float n = max(d - .52, 0.);
+  float k = pow(uRel, 1.7 * n);
+  vec2 off = uTilt * (d - .45) + vec2(0., uDrop * n);
+  return (uSrc + (p - uC - off) / (uS * k)) / uImgSz;
+}
+void main() {
+  vec2 p = vec2(gl_FragCoord.x, uView.y * uDpr - gl_FragCoord.y) / uDpr;
+  const int N = 28;
+  float dHit = 0.0, dMiss = 1.0;
+  bool hit = false;
+  for (int i = 0; i < N; i++) {
+    float d = 1.0 - float(i) / float(N - 1);
+    float dm = texture2D(uDep, srcAt(p, d)).r;
+    if (dm >= d) { dHit = d; hit = true; break; }
+    dMiss = d;
+  }
+  if (hit) {
+    // afinar entre el último fallo y el acierto
+    float lo = dHit, hi = dMiss;
+    for (int j = 0; j < 5; j++) {
+      float mid = .5 * (lo + hi);
+      if (texture2D(uDep, srcAt(p, mid)).r >= mid) lo = mid; else hi = mid;
+    }
+    dHit = lo;
+  }
+  vec2 uv = clamp(srcAt(p, dHit), vec2(0.), vec2(1.));
+  gl_FragColor = vec4(texture2D(uImg, uv).rgb, 1.);
+}`;
+
+  let gl = null, prog = null, U = {}, glReady = false;
+  function initGL(img, dep) {
+    gl = canvas.getContext("webgl", { antialias: false, alpha: false, premultipliedAlpha: false, powerPreference: "high-performance" });
+    if (!gl) return false;
+    const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.warn(gl.getShaderInfoLog(s)); return null; } return s; };
+    const v = sh(gl.VERTEX_SHADER, VS), f = sh(gl.FRAGMENT_SHADER, FS);
+    if (!v || !f) return false;
+    prog = gl.createProgram(); gl.attachShader(prog, v); gl.attachShader(prog, f); gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return false;
+    gl.useProgram(prog);
+    const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(prog, "a"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    const tex = (unit, source) => { const t = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, source); };
+    tex(0, img); tex(1, dep);
+    for (const n of ["uImg", "uDep", "uView", "uDpr", "uImgSz", "uSrc", "uC", "uS", "uRel", "uTilt", "uDrop"]) U[n] = gl.getUniformLocation(prog, n);
+    gl.uniform1i(U.uImg, 0); gl.uniform1i(U.uDep, 1);
+    gl.uniform2f(U.uImgSz, PHOTO.w, PHOTO.h); gl.uniform2f(U.uSrc, PHOTO.cx, PHOTO.cy);
+    return true;
+  }
+  if (!reduce) {
+    const load = src => new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = ko; i.src = src; });
+    Promise.all([load("../foto.jpg"), load("depth.png")]).then(([img, dep]) => {
+      try { glReady = initGL(img, dep); } catch (e) { glReady = false; }
+      if (glReady) { introStart = performance.now(); requestAnimationFrame(() => stage.classList.add("gl")); }
+    }).catch(() => {});
+  }
+
+  /* ---------- inclinación (celu) y mouse (compu) ---------- */
+  const tilt = { x: 0, y: 0, tx: 0, ty: 0 };
+  let base = null, usingTilt = false, mouseSeen = false;
+  function onOrient(e) {
+    if (e.gamma == null || e.beta == null) return;
+    if (!base) base = { g: e.gamma, b: e.beta };
+    usingTilt = true;
+    tilt.tx = clamp((e.gamma - base.g) / 18, -1, 1);
+    tilt.ty = clamp((e.beta - base.b) / 18, -1, 1);
+    // con el tiempo, el "centro" sigue lentamente a cómo sostiene el teléfono
+    base.g = lerp(base.g, e.gamma, .004); base.b = lerp(base.b, e.beta, .004);
+  }
+  if (!reduce && "DeviceOrientationEvent" in window) {
+    const D = window.DeviceOrientationEvent;
+    if (typeof D.requestPermission === "function") {
+      // iOS: hace falta un toque; se pide una sola vez y nunca bloquea nada
+      const ask = () => {
+        removeEventListener("touchend", ask); removeEventListener("click", ask);
+        D.requestPermission().then(s => { if (s === "granted") addEventListener("deviceorientation", onOrient); }).catch(() => {});
+      };
+      addEventListener("touchend", ask, { passive: true }); addEventListener("click", ask);
+    } else addEventListener("deviceorientation", onOrient);
+  }
+  if (!reduce) addEventListener("pointermove", e => {
+    if (e.pointerType !== "mouse") return;
+    mouseSeen = true;
+    tilt.tx = clamp((e.clientX / innerWidth) * 2 - 1, -1, 1);
+    tilt.ty = clamp((e.clientY / innerHeight) * 2 - 1, -1, 1);
+  }, { passive: true });
+
+  /* ---------- escena ---------- */
+  let introStart = 0, cw = 0, ch = 0;
+  function ringFrame(now) {
+    const vw = innerWidth, vh = stage.clientHeight;
+    const p = reduce ? 1 : clamp(-ring.getBoundingClientRect().top / (ring.offsetHeight - vh));
+
+    const sc = Math.max(vw / PHOTO.w, vh / PHOTO.h);
+    const posY = vw > vh ? .38 : .5;
+    const ox = (vw - PHOTO.w * sc) / 2, oy = (vh - PHOTO.h * sc) * posY;
+    const sx = ox + PHOTO.cx * sc, sy = oy + PHOTO.cy * sc, r0 = PHOTO.r * sc;
+
+    const rEnd = Math.min(vw * .3, vh * .18);
+    const z = ease(clamp((p - .04) / .62));
+    const s = lerp(1, rEnd / r0, z);
+    const cx = lerp(sx, vw / 2, z), cy = lerp(sy, vh * .3, z);
+
+    if (glReady) {
+      // un pelín de sobre-escala para que el movimiento nunca muestre bordes
+      const over = 1.045;
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      const W = Math.round(vw * dpr), H = Math.round(vh * dpr);
+      if (W !== cw || H !== ch) { canvas.width = cw = W; canvas.height = ch = H; gl.viewport(0, 0, W, H); }
+
+      // llegada: el salar "se asienta" y la cámara avanza apenas
+      const it = clamp((now - introStart) / 2600), ie = easeOut(it);
+      // deriva lenta si nadie mueve nada (que la foto respire)
+      const idle = (usingTilt || mouseSeen) ? 0 : 1;
+      const tt = now / 1000;
+      const ix = idle * Math.sin(tt * .45) * .55, iy = idle * Math.sin(tt * .31 + 1) * .35;
+      const k = usingTilt ? .12 : .06;
+      tilt.x = lerp(tilt.x, tilt.tx + ix, k); tilt.y = lerp(tilt.y, tilt.ty + iy, k);
+
+      const amp = Math.min(vw, vh) * (vw > vh ? .05 : .075) * (1 - .7 * z);
+      const intro = (1 - ie) * vh * .35;
+      const drop = intro + z * vh * .9;
+      const rel = s * (1 + (1 - ie) * .06);
+
+      gl.uniform2f(U.uView, vw, vh); gl.uniform1f(U.uDpr, dpr);
+      gl.uniform2f(U.uC, cx, cy);
+      gl.uniform1f(U.uS, sc * over * s);
+      gl.uniform1f(U.uRel, rel);
+      gl.uniform2f(U.uTilt, -tilt.x * amp, -tilt.y * amp * .7);
+      gl.uniform1f(U.uDrop, drop);
+      if (p < 1 || ring.getBoundingClientRect().bottom > 0) gl.drawArrays(gl.TRIANGLES, 0, 3);
+      bg.style.visibility = "hidden";
+    } else {
+      bg.style.visibility = "";
+      bg.style.objectPosition = `50% ${posY * 100}%`;
+      bg.style.transform = `translate(${cx - sx * s}px, ${cy - sy * s}px) scale(${s})`;
+    }
+
+    const r = r0 * s * (glReady ? 1.045 : 1);
+    const fog = ease(clamp((p - .2) / .45));
+    veil.style.background = `radial-gradient(circle at ${cx}px ${cy}px, rgba(244,244,241,0) ${r}px, rgba(244,244,241,${fog}) ${lerp(r * 3, r + 1, fog)}px)`;
+
+    const hr = r + 8, circ = 2 * Math.PI * hr, h = clamp((p - .55) / .25);
+    halo.setAttribute("cx", cx); halo.setAttribute("cy", cy); halo.setAttribute("r", hr);
+    halo.setAttribute("stroke-dasharray", circ); halo.setAttribute("stroke-dashoffset", circ * (1 - h));
+    halo.setAttribute("transform", `rotate(-90 ${cx} ${cy})`);
+
+    // los textos entran escalonados, sobre papel
+    const a = clamp((p - .66) / .2);
+    after.style.opacity = a > 0 ? 1 : 0;
+    [...after.children].forEach((c, i) => {
+      const t = easeOut(clamp(a * 1.6 - i * .2));
+      c.style.opacity = t; c.style.transform = `translateY(${(1 - t) * 14}px)`;
+    });
+    cue.style.opacity = 1 - clamp(p / .05);
+    after.style.top = `${cy + r + Math.max(28, vh * .045)}px`;
+  }
+
+  /* segunda foto */
+  const win = document.getElementById("win"), photo2 = document.getElementById("photo2");
+  function photoFrame() {
+    if (reduce) return;
+    const b = win.getBoundingClientRect();
+    const t = clamp((innerHeight - b.top) / (innerHeight + b.height));
+    photo2.style.transform = `translateY(${(t - .5) * -8}%)`;
+  }
+
+  /* cuenta regresiva */
+  const el = id => document.getElementById(id);
+  const pad = n => String(n).padStart(2, "0");
+  let last = "";
+  function countFrame(force) {
+    const ms = Math.max(0, TARGET - Date.now());
+    const sec = Math.floor(ms / 1000);
+    const v = { d: Math.floor(sec / 86400), h: Math.floor(sec % 86400 / 3600), m: Math.floor(sec % 3600 / 60), s: sec % 60 };
+    if (lang + sec === last && !force) return;
+    last = lang + sec;
+    el("d").textContent = v.d; el("h").textContent = pad(v.h); el("m").textContent = pad(v.m); el("s").textContent = pad(v.s);
+    for (const k of ["d", "h", "m", "s"]) el("u" + k).textContent = T[lang].units[k][v[k] === 1 ? 0 : 1];
+    if (ms === 0) document.querySelector("#count .until").textContent = T[lang].done;
+  }
+
+  document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+  let saved = null;
+  try { saved = localStorage.getItem("lang"); } catch (e) {}
+  setLang(new URLSearchParams(location.search).get("lang") || saved || ((navigator.language || "").toLowerCase().startsWith("de") ? "de" : "es"));
+
+  function loop(now) { ringFrame(now); photoFrame(); countFrame(); requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+</script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Julia &amp; Nico · 9.10.2027</title>
+<meta name="description" content="Julia y Nico se casan el sábado 9 de octubre de 2027 en Buenos Aires. Julia und Nico heiraten.">
+<meta property="og:title" content="Julia &amp; Nico">
+<meta property="og:description" content="Sábado 9 de octubre de 2027, Buenos Aires">
+<meta property="og:image" content="https://nscherzer.github.io/casamiento-web/foto.jpg">
+<meta name="theme-color" content="#f4f4f1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2236%22 fill=%22none%22 stroke=%22%23a35a33%22 stroke-width=%2210%22/%3E%3C/svg%3E">
+<link rel="preload" as="image" href="../foto.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Variante PORTAL: la cámara entra por el anillo y sale del otro lado, en foto2.
+     Regla de la casa: la letra nunca va sobre la foto. */
+  :root {
+    --paper: #f4f4f1;
+    --ink: #1f2430;
+    --ink-2: #4a5060;
+    --rule: #cfd0cc;
+    --copper: #a35a33;
+    --gutter: clamp(20px, 6vw, 72px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: "Hanken Grotesk", system-ui, sans-serif; font-weight: 400;
+    font-size: 17px; line-height: 1.6;
+    overflow-x: hidden;
+  }
+  .display { font-family: "Bodoni Moda", "Didot", serif; font-optical-sizing: auto; font-weight: 500; }
+  :focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
+
+  /* idioma */
+  .lang { position: fixed; top: max(10px, env(safe-area-inset-top)); right: 10px; z-index: 50; display: flex; background: var(--paper); padding: 0 6px; }
+  .lang button {
+    border: 0; background: none; cursor: pointer; color: var(--ink-2);
+    font: 500 14px/1 "Hanken Grotesk", sans-serif; padding: 12px 8px 10px;
+    border-bottom: 1.5px solid transparent;
+  }
+  .lang button[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+
+  /* el portal */
+  .portal { height: 400vh; position: relative; background: var(--paper); }
+  .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--paper); }
+  #cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+  .cue {
+    position: absolute; left: 50%; bottom: max(22px, env(safe-area-inset-bottom)); transform: translateX(-50%);
+    background: var(--paper); color: var(--ink); padding: 7px 16px 8px;
+    font-size: 14px; font-weight: 500; letter-spacing: .02em; white-space: nowrap;
+  }
+  .cue::after { content: ""; display: block; width: 1px; height: 14px; margin: 5px auto 0; background: var(--copper); animation: drip 1.8s ease-in-out infinite; transform-origin: top; }
+  @keyframes drip { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+
+  /* el frente, sobre papel */
+  .front { position: relative; padding: clamp(84px, 16vh, 160px) var(--gutter) 0; text-align: center; }
+  .mark { display: block; width: 34px; height: 34px; margin: 0 auto 26px; }
+  .front .lead { font-size: 13px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--copper); }
+  .front h1 { margin-top: 18px; font-size: clamp(64px, 17vw, 168px); line-height: .95; letter-spacing: -.015em; font-weight: 500; }
+  .front h1 .amp { display: block; font-style: italic; font-weight: 400; color: var(--copper); font-size: .52em; line-height: 1.15; }
+  .front .rule { width: 56px; height: 1px; background: var(--copper); margin: 34px auto 26px; border: 0; }
+  .front .when { font-size: clamp(18px, 2.2vw, 22px); }
+  .front .where { color: var(--ink-2); }
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 1.1s ease, transform 1.1s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* cuenta regresiva */
+  .count { padding: clamp(88px, 16vh, 160px) var(--gutter) 0; text-align: center; }
+  .count .until { font-size: 13px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-2); }
+  .rows { margin: 18px auto 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 640px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 18px 0 16px; }
+  .rows > div + div { border-left: 1px solid var(--rule); }
+  .rows .n { display: block; font-size: clamp(38px, 10.5vw, 76px); line-height: 1.1; font-variant-numeric: lining-nums tabular-nums; }
+  .rows .u { display: block; font-size: 13px; color: var(--ink-2); }
+  .count .note { margin: 44px auto 0; max-width: 34ch; font-size: 18px; }
+
+  /* foto2 solo si no hay movimiento (en el portal ya se ve) */
+  .photo { display: none; padding: clamp(64px, 12vh, 120px) var(--gutter) 0; }
+  .photo img { display: block; width: 100%; max-width: 1100px; height: min(88vh, 125vw); margin: 0 auto; object-fit: cover; object-position: 50% 40%; }
+
+  /* cierre */
+  .close { padding: clamp(96px, 16vh, 160px) var(--gutter) 24px; text-align: center; }
+  .close .sign { font-size: clamp(34px, 7vw, 56px); line-height: 1.1; }
+  .close .sign i { font-style: italic; font-weight: 400; color: var(--copper); }
+  footer { padding: 0 var(--gutter) 40px; text-align: center; color: var(--ink-2); font-size: 14px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portal { height: auto; }
+    .stage { position: relative; }
+    #cv, .cue::after { display: none; }
+    .photo { display: block; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+  <nav class="lang" aria-label="Idioma / Sprache">
+    <button type="button" data-lang="es" aria-pressed="true" aria-label="Español">ES</button>
+    <button type="button" data-lang="de" aria-pressed="false" aria-label="Deutsch">DE</button>
+  </nav>
+
+  <section class="portal" id="portal">
+    <div class="stage" id="stage">
+      <img class="fallback" id="bg" src="../foto.jpg" alt="Julia y Nico dentro del anillo de compromiso" fetchpriority="high">
+      <canvas id="cv" aria-hidden="true"></canvas>
+      <p class="cue" id="cue" data-i18n="cue">Deslizá</p>
+    </div>
+  </section>
+
+  <section class="front" id="front">
+    <svg class="mark reveal" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="15" fill="none" stroke="#a35a33" stroke-width="1.2"/></svg>
+    <p class="lead reveal" data-i18n="lead">Nos casamos</p>
+    <h1 class="display reveal">Julia <span class="amp">&amp;</span> Nico</h1>
+    <hr class="rule reveal">
+    <p class="when reveal" data-i18n="when">Sábado 9 de octubre de 2027</p>
+    <p class="where reveal">Buenos Aires</p>
+  </section>
+
+  <section class="count" id="count" aria-label="Cuenta regresiva">
+    <p class="until reveal" data-i18n="until">Faltan</p>
+    <div class="rows reveal" role="timer">
+      <div><span class="n display" id="d">–</span><span class="u" id="ud"></span></div>
+      <div><span class="n display" id="h">–</span><span class="u" id="uh"></span></div>
+      <div><span class="n display" id="m">–</span><span class="u" id="um"></span></div>
+      <div><span class="n display" id="s">–</span><span class="u" id="us"></span></div>
+    </div>
+    <p class="note reveal" data-i18n="note">Reservate la fecha. La invitación con todos los detalles llega más adelante.</p>
+  </section>
+
+  <figure class="photo"><img id="photo2" src="../foto2.jpg" alt="Julia y Nico en las Salinas Grandes" loading="lazy"></figure>
+
+  <section class="close">
+    <p class="sign display">Julia <i>&amp;</i> Nico</p>
+  </section>
+
+  <footer data-i18n="footer">Buenos Aires, octubre de 2027</footer>
+
+<script>
+  // 9 de octubre de 2027, 00:00 en Buenos Aires (UTC-3). Cambiar acá cuando esté la hora.
+  const TARGET = new Date("2027-10-09T00:00:00-03:00");
+
+  // Anillo en foto.jpg (2160x2880): centro y radio exterior, en píxeles de la foto.
+  const PHOTO = { w: 2160, h: 2880, cx: 1177, cy: 1243, r: 172 };
+  // Punto de interés de foto2 (1440x1920): la pareja.
+  const PHOTO2 = { w: 1440, h: 1920, fx: .53, fy: .44 };
+
+  const T = {
+    es: {
+      lead: "Nos casamos", cue: "Deslizá", when: "Sábado 9 de octubre de 2027", until: "Faltan",
+      units: { d: ["día", "días"], h: ["hora", "horas"], m: ["minuto", "minutos"], s: ["segundo", "segundos"] },
+      note: "Reservate la fecha. La invitación con todos los detalles llega más adelante.",
+      footer: "Buenos Aires, octubre de 2027", done: "Es hoy",
+      alt1: "Julia y Nico en las Salinas Grandes", alt2: "Julia y Nico dentro del anillo de compromiso", region: "Cuenta regresiva"
+    },
+    de: {
+      lead: "Wir heiraten", cue: "Scrollen", when: "Samstag, 9. Oktober 2027", until: "Noch",
+      units: { d: ["Tag", "Tage"], h: ["Stunde", "Stunden"], m: ["Minute", "Minuten"], s: ["Sekunde", "Sekunden"] },
+      note: "Haltet euch den Tag frei. Die Einladung mit allen Details folgt.",
+      footer: "Buenos Aires, Oktober 2027", done: "Heute ist es so weit",
+      alt1: "Julia und Nico in den Salinas Grandes", alt2: "Julia und Nico im Verlobungsring", region: "Countdown"
+    }
+  };
+
+  /* idioma */
+  let lang = "es";
+  function setLang(l) {
+    lang = T[l] ? l : "es";
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = T[lang][el.dataset.i18n]; });
+    document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+    document.getElementById("photo2").alt = T[lang].alt1;
+    document.getElementById("bg").alt = T[lang].alt2;
+    document.getElementById("count").setAttribute("aria-label", T[lang].region);
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+    countFrame(true);
+  }
+
+  /* el portal (canvas) */
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const portal = document.getElementById("portal"), stage = document.getElementById("stage");
+  const cv = document.getElementById("cv"), ctx = cv.getContext("2d");
+  const cue = document.getElementById("cue");
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const smooth = t => t * t * t * (t * (t * 6 - 15) + 10);           // smootherstep
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+  const load = src => new Promise(res => { const i = new Image(); i.decoding = "async"; i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
+  let A = null, AB = null, B = null, RING = null;
+  Promise.all([load("../foto.jpg"), load("foto-blur.jpg"), load("../foto2.jpg"), load("ring.png")])
+    .then(([a, ab, b, r]) => { A = a; AB = ab; B = b; RING = r; lastKey = ""; });
+
+  let W = 0, H = 0, DPR = 1, lastKey = "";
+  function size() {
+    DPR = Math.min(2, devicePixelRatio || 1);
+    W = innerWidth; H = stage.clientHeight;
+    cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+    lastKey = "";
+  }
+
+  // Dibuja una imagen con su punto (px,py) en coordenadas de la foto llevado a (X,Y) de pantalla, a escala k.
+  function place(img, iw, ih, px, py, X, Y, k, alpha) {
+    if (!img || alpha <= 0) return;
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(img, X - px * k, Y - py * k, iw * k, ih * k);
+  }
+
+  function portalFrame() {
+    if (reduce) return;
+    const p = clamp(-portal.getBoundingClientRect().top / (portal.offsetHeight - H));
+    const key = W + "x" + H + ":" + p.toFixed(4) + (A ? 1 : 0);
+    if (key === lastKey) return;
+    lastKey = key;
+    cue.style.opacity = 1 - clamp(p / .04);
+    if (!A || !B) return;
+
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = "#f4f4f1"; ctx.fillRect(0, 0, W, H);
+
+    // encuadre inicial (cover) de foto.jpg
+    const sc = Math.max(W / PHOTO.w, H / PHOTO.h);
+    const posY = W > H ? .38 : .5;
+    const ox = (W - PHOTO.w * sc) / 2, oy = (H - PHOTO.h * sc) * posY;
+    const sx = ox + PHOTO.cx * sc, sy = oy + PHOTO.cy * sc, r0 = PHOTO.r * sc;
+    const far = Math.hypot(W / 2, H / 2);                  // del centro a la esquina
+
+    // zoom en escala logarítmica (velocidad percibida constante), con entrada y salida suaves
+    const sEnd = (far * 1.12) / (r0 * .88);
+    const z = smooth(clamp((p - .03) / .62));
+    const s = Math.exp(Math.log(sEnd) * z);
+    const c = smooth(clamp(z / .7));
+    const cx = lerp(sx, W / 2, c), cy = lerp(sy, H / 2, c);
+    const r = r0 * s;                                       // radio exterior del anillo en pantalla
+    const m = r * .88;                                      // la abertura (la puerta)
+    const open = clamp((m - .2 * Math.min(W, H)) / (.3 * Math.min(W, H)));  // cuánto se ve el otro lado
+    const crossed = m > far;
+
+    // 1) el lado de acá: foto.jpg, que se desenfoca a medida que pasa junto a la cámara
+    if (!crossed) {
+      const k = sc * s;
+      place(A, PHOTO.w, PHOTO.h, PHOTO.cx, PHOTO.cy, cx, cy, k, 1);
+      const blur = clamp((s - 1.6) / 3.2);
+      if (AB) place(AB, 1080, 1440, PHOTO.cx / 2, PHOTO.cy / 2, cx, cy, k * 2, blur);
+      // un velo leve que oscurece hacia afuera: profundidad
+      const dim = .22 * smooth(clamp((s - 1.2) / 4));
+      if (dim > 0) {
+        ctx.globalAlpha = 1;
+        const g = ctx.createRadialGradient(cx, cy, m, cx, cy, Math.max(m * 1.01, far * 1.4));
+        g.addColorStop(0, "rgba(31,36,48,0)"); g.addColorStop(1, `rgba(31,36,48,${dim})`);
+        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      }
+    }
+
+    // 2) el otro lado: foto2 dentro de la abertura, que se acerca (de 1.45x a 1x)
+    if (open > 0) {
+      const k2 = Math.max(W / PHOTO2.w, H / PHOTO2.h);
+      // del otro lado la cámara sigue avanzando y frena, hacia la pareja de foto2
+      const settle = easeOut(clamp((p - .3) / .7));
+      const kk = k2 * lerp(1.0, 1.3, settle);
+      // foto2 centrada en la pareja, pero siempre cubriendo la pantalla (sin bordes de papel)
+      const fx = PHOTO2.fx * PHOTO2.w, fy = PHOTO2.fy * PHOTO2.h;
+      const X = clamp(W / 2 - fx * kk, W - PHOTO2.w * kk, 0), Y = clamp(H / 2 - fy * kk, H - PHOTO2.h * kk, 0);
+      ctx.save();
+      if (!crossed) { ctx.beginPath(); ctx.arc(cx, cy, m, 0, Math.PI * 2); ctx.clip(); }
+      ctx.globalAlpha = crossed ? 1 : smooth(clamp((open - .35) / .5));
+      ctx.drawImage(B, X, Y, PHOTO2.w * kk, PHOTO2.h * kk);
+      // al cruzar, un instante de luz (como el reflejo de la sal) tapa el cambio de escena
+      const glow = .9 * smooth(clamp(open / .35)) * (1 - smooth(clamp((open - .45) / .45)));
+      if (glow > .01 && !crossed) { ctx.globalAlpha = glow; ctx.fillStyle = "#f4f4f1"; ctx.fillRect(0, 0, W, H); }
+      ctx.restore();
+    }
+
+    // 3) el borde de cobre que pasa junto a la cámara
+    if (RING && open > 0) {
+      const gone = clamp((m / far - .6) / .45);
+      const a = easeOut(open) * (1 - gone) * .9;
+      if (a > 0.01) {
+        // en ring.png la banda está en el radio .80 de medio lado
+        const half = (r * .94) / .80;
+        ctx.globalAlpha = a;
+        ctx.drawImage(RING, cx - half, cy - half, half * 2, half * 2);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* aparición del texto sobre papel */
+  if (!reduce && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+    }), { rootMargin: "0px 0px -8% 0px" });
+    document.querySelectorAll(".reveal").forEach((el, i) => { el.style.transitionDelay = (i % 6) * 90 + "ms"; io.observe(el); });
+  } else document.querySelectorAll(".reveal").forEach(el => el.classList.add("in"));
+
+  /* cuenta regresiva */
+  const el = id => document.getElementById(id);
+  const pad = n => String(n).padStart(2, "0");
+  let last = "";
+  function countFrame(force) {
+    const ms = Math.max(0, TARGET - Date.now());
+    const sec = Math.floor(ms / 1000);
+    const v = { d: Math.floor(sec / 86400), h: Math.floor(sec % 86400 / 3600), m: Math.floor(sec % 3600 / 60), s: sec % 60 };
+    if (lang + sec === last && !force) return;
+    last = lang + sec;
+    el("d").textContent = v.d; el("h").textContent = pad(v.h); el("m").textContent = pad(v.m); el("s").textContent = pad(v.s);
+    for (const k of ["d", "h", "m", "s"]) el("u" + k).textContent = T[lang].units[k][v[k] === 1 ? 0 : 1];
+    if (ms === 0) document.querySelector("#count .until").textContent = T[lang].done;
+  }
+
+  document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+  let saved = null;
+  try { saved = localStorage.getItem("lang"); } catch (e) {}
+  setLang(new URLSearchParams(location.search).get("lang") || saved || ((navigator.language || "").toLowerCase().startsWith("de") ? "de" : "es"));
+
+  size();
+  addEventListener("resize", size);
+  function loop() { portalFrame(); countFrame(); requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+</script>
+</body>
+</html>

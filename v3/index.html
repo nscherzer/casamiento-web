@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Julia &amp; Nico · 9.10.2027</title>
+<meta name="description" content="Julia y Nico se casan el sábado 9 de octubre de 2027 en Buenos Aires. Julia und Nico heiraten.">
+<meta property="og:title" content="Julia &amp; Nico">
+<meta property="og:description" content="Sábado 9 de octubre de 2027, Buenos Aires">
+<meta property="og:image" content="https://nscherzer.github.io/casamiento-web/foto.jpg">
+<meta name="theme-color" content="#f4f4f1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2236%22 fill=%22none%22 stroke=%22%23a35a33%22 stroke-width=%2210%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  // Sal viva: si hay movimiento, la letra grande la dibuja el canvas (granos de sal);
+  // el texto real queda en el DOM (transparente) para lectores de pantalla y buscadores.
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("salt");
+</script>
+<style>
+  /* Regla de la casa: la letra nunca va sobre la foto. Texto sobre papel, foto limpia.
+     Bodoni Moda solo en tamaños grandes (nombres, fecha, números); Hanken Grotesk para todo lo chico. */
+  :root {
+    --paper: #f4f4f1;
+    --ink: #1f2430;
+    --ink-2: #4a5060;
+    --rule: #cfd0cc;
+    --copper: #a35a33;
+    --gutter: clamp(20px, 6vw, 72px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: "Hanken Grotesk", system-ui, sans-serif; font-weight: 400;
+    font-size: 17px; line-height: 1.6;
+    overflow-x: hidden;
+  }
+  .display { font-family: "Bodoni Moda", "Didot", serif; font-optical-sizing: auto; font-weight: 500; }
+  :focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
+
+  /* idioma */
+  .lang { position: fixed; top: max(10px, env(safe-area-inset-top)); right: 10px; z-index: 50; display: flex; background: var(--paper); padding: 0 6px; }
+  .lang button {
+    border: 0; background: none; cursor: pointer; color: var(--ink-2);
+    font: 500 14px/1 "Hanken Grotesk", sans-serif; padding: 12px 8px 10px;
+    border-bottom: 1.5px solid transparent;
+  }
+  .lang button[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+
+  /* entrada al anillo: la foto sola, sin texto encima */
+  .ring { height: 320vh; position: relative; }
+  .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--paper); }
+  .stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 0 0; will-change: transform; }
+  .veil { position: absolute; inset: 0; pointer-events: none; }
+  #halo { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .salt-cv { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 3; }
+
+  /* al terminar el zoom: el frente de la invitación, sobre papel */
+  .after { position: absolute; left: 0; right: 0; padding: 0 var(--gutter); text-align: center; z-index: 2; }
+  .after .lead {
+    font-size: 12.5px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-2);
+    transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.2,.7,.2,1);
+  }
+  .after h1 { margin-top: 10px; font-size: clamp(52px, min(13vw, 10vh), 104px); line-height: 1.04; letter-spacing: 0; }
+  .after h1 i, .close .sign i { font-style: italic; font-weight: 400; color: var(--copper); --salt: #a35a33; }
+  .after .date { margin-top: 12px; font-family: "Bodoni Moda", "Didot", serif; font-style: italic; font-weight: 400; font-size: clamp(21px, min(5.6vw, 3.6vh), 32px); line-height: 1.2; }
+  .after .where {
+    margin-top: 14px; font-size: 12.5px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-2);
+    transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.2,.7,.2,1);
+  }
+  .rule { display: block; width: 28px; height: 1px; margin: 16px auto 0; background: var(--copper); transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+  .cue {
+    position: absolute; left: 50%; bottom: max(20px, env(safe-area-inset-bottom)); transform: translateX(-50%);
+    color: var(--ink); font-size: 15px; font-weight: 500;
+  }
+
+  /* modo sal: el texto grande lo pinta el canvas; el chico aparece con calma */
+  .salt .after h1, .salt .after .date, .salt .close .sign { color: transparent; }
+  .salt .after h1 i, .salt .close .sign i { color: transparent; }
+  .salt .after .lead, .salt .after .where { opacity: 0; transform: translateY(6px); }
+  .salt .after .rule { transform: scaleX(0); }
+  .salt .after.lead-on .lead { opacity: 1; transform: none; }
+  .salt .after.where-on .where { opacity: 1; transform: none; }
+  .salt .after.where-on .rule { transform: scaleX(1); }
+  .salt .after { opacity: 1 !important; }
+
+  /* cuenta regresiva */
+  .count { position: relative; padding: clamp(72px, 14vh, 140px) var(--gutter); text-align: center; }
+  .count .until { font-size: 12.5px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-2); }
+  .rows { margin: 10px auto 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 620px; }
+  .rows .n { display: block; font-size: clamp(42px, 11vw, 76px); line-height: 1.1; font-variant-numeric: lining-nums tabular-nums; }
+  .rows .u { display: block; font-size: 14px; color: var(--ink-2); }
+  .count .note { margin: 40px auto 0; max-width: 38ch; font-size: 18px; }
+
+  /* segunda foto */
+  .photo { padding: 0 var(--gutter); }
+  .photo img { display: block; width: 100%; max-width: 1100px; height: min(88vh, 125vw); margin: 0 auto; object-fit: cover; object-position: 50% 40%; }
+
+  /* cierre */
+  .close { position: relative; padding: clamp(56px, 10vh, 100px) var(--gutter) 24px; text-align: center; }
+  .close .sign { font-size: clamp(38px, 8vw, 60px); line-height: 1.1; }
+  footer { padding: 0 var(--gutter) 36px; text-align: center; color: var(--ink-2); font-size: 14px; }
+
+  @media (prefers-reduced-motion: reduce) { .ring { height: 100vh; } }
+</style>
+</head>
+<body>
+  <nav class="lang" aria-label="Idioma / Sprache">
+    <button type="button" data-lang="es" aria-pressed="true" aria-label="Español">ES</button>
+    <button type="button" data-lang="de" aria-pressed="false" aria-label="Deutsch">DE</button>
+  </nav>
+
+  <section class="ring" id="ring">
+    <div class="stage" id="stage">
+      <img id="bg" src="../foto.jpg" alt="Julia y Nico dentro del anillo de compromiso" fetchpriority="high">
+      <div class="veil" id="veil"></div>
+      <svg id="halo" aria-hidden="true"><circle id="haloCircle" fill="none" stroke="#a35a33" stroke-width="1.2"/></svg>
+      <p class="cue" id="cue" data-i18n="cue">Deslizá</p>
+      <div class="after" id="after">
+        <p class="lead" data-i18n="lead">Nos casamos</p>
+        <h1 class="display" id="names">Julia <i>&amp;</i> Nico</h1>
+        <p class="date" id="date" data-i18n="when">Sábado 9 de octubre de 2027</p>
+        <span class="rule" aria-hidden="true"></span>
+        <p class="where">Buenos Aires</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="count" id="count" aria-label="Cuenta regresiva">
+    <p class="until" data-i18n="until">Faltan</p>
+    <div class="rows" role="timer">
+      <div><span class="n display" id="d">–</span><span class="u" id="ud"></span></div>
+      <div><span class="n display" id="h">–</span><span class="u" id="uh"></span></div>
+      <div><span class="n display" id="m">–</span><span class="u" id="um"></span></div>
+      <div><span class="n display" id="s">–</span><span class="u" id="us"></span></div>
+    </div>
+    <p class="note" data-i18n="note">Reservate la fecha. La invitación con todos los detalles llega más adelante.</p>
+  </section>
+
+  <figure class="photo"><img id="photo2" src="../foto2.jpg" alt="Julia y Nico en las Salinas Grandes" loading="lazy"></figure>
+
+  <section class="close" id="close">
+    <p class="sign display" id="sign">Julia <i>&amp;</i> Nico</p>
+  </section>
+
+  <footer data-i18n="footer">Buenos Aires, octubre de 2027</footer>
+
+<script>
+  // 9 de octubre de 2027, 00:00 en Buenos Aires (UTC-3). Cambiar acá cuando esté la hora.
+  const TARGET = new Date("2027-10-09T00:00:00-03:00");
+
+  // Anillo en foto.jpg (2160x2880): centro y radio exterior, en píxeles de la foto.
+  const PHOTO = { w: 2160, h: 2880, cx: 1177, cy: 1243, r: 172 };
+
+  const T = {
+    es: {
+      lead: "Nos casamos", cue: "Deslizá", when: "Sábado 9 de octubre de 2027", until: "Faltan",
+      units: { d: ["día", "días"], h: ["hora", "horas"], m: ["minuto", "minutos"], s: ["segundo", "segundos"] },
+      note: "Reservate la fecha. La invitación con todos los detalles llega más adelante.",
+      footer: "Buenos Aires, octubre de 2027", done: "Es hoy",
+      alt1: "Julia y Nico en las Salinas Grandes", alt2: "Julia y Nico dentro del anillo de compromiso", region: "Cuenta regresiva"
+    },
+    de: {
+      lead: "Wir heiraten", cue: "Scrollen", when: "Samstag, 9. Oktober 2027", until: "Noch",
+      units: { d: ["Tag", "Tage"], h: ["Stunde", "Stunden"], m: ["Minute", "Minuten"], s: ["Sekunde", "Sekunden"] },
+      note: "Haltet euch den Tag frei. Die Einladung mit allen Details folgt.",
+      footer: "Buenos Aires, Oktober 2027", done: "Heute ist es so weit",
+      alt1: "Julia und Nico in den Salinas Grandes", alt2: "Julia und Nico im Verlobungsring", region: "Countdown"
+    }
+  };
+
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const SALT = document.documentElement.classList.contains("salt");
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const now = () => performance.now() / 1000;
+
+  /* idioma */
+  let lang = "es";
+  function setLang(l) {
+    const prev = lang;
+    lang = T[l] ? l : "es";
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = T[lang][el.dataset.i18n]; });
+    document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+    document.getElementById("photo2").alt = T[lang].alt1;
+    document.getElementById("bg").alt = T[lang].alt2;
+    document.getElementById("count").setAttribute("aria-label", T[lang].region);
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+    countFrame(true);
+    if (prev !== lang && hero) hero.retext("date");
+  }
+
+  /* ───────────── Sal: granos que arman la letra ───────────── */
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const SMALL = matchMedia("(pointer: coarse)").matches || innerWidth < 700;
+  const BUCKETS = ["#1f2430", "#4a5060", "#a35a33", "#8d8a84"];
+  const P = { x: -1e4, y: -1e4, vx: 0, vy: 0, on: false, t: 0 };
+
+  // Pinta el texto de un elemento en un canvas, palabra por palabra, en su lugar exacto del DOM.
+  function paintText(ctx, el, ox, oy) {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const range = document.createRange();
+    let n;
+    while ((n = walker.nextNode())) {
+      const cs = getComputedStyle(n.parentElement);
+      ctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      ctx.fillStyle = cs.getPropertyValue("--salt").trim() || "#1f2430";
+      const re = /\S+/g; let m;
+      while ((m = re.exec(n.data))) {
+        range.setStart(n, m.index); range.setEnd(n, m.index + m[0].length);
+        const r = range.getBoundingClientRect();
+        ctx.fillText(m[0], r.left - ox, r.top - oy + ctx.measureText(m[0]).fontBoundingBoxAscent);
+      }
+    }
+  }
+
+  class Group {
+    constructor(field, el, cap, o) {
+      Object.assign(this, { field, el, cap, spread: 1.0, jit: .3, dmin: 1.1, dmax: 1.65, fadeT: .45, t0: -1, leaveT: -1 }, o);
+      this.build();
+    }
+    build() {
+      const f = this.field, hr = f.rect, r = this.el.getBoundingClientRect(), pad = 6;
+      const bx = r.left - hr.left - pad, by = r.top - hr.top - pad, bw = r.width + pad * 2, bh = r.height + pad * 2;
+      Object.assign(this, { bx, by, bw, bh });
+      const buf = this.buf = document.createElement("canvas");
+      buf.width = Math.ceil(bw * DPR); buf.height = Math.ceil(bh * DPR);
+      const b = buf.getContext("2d", { willReadFrequently: true });
+      b.setTransform(DPR, 0, 0, DPR, 0, 0);
+      paintText(b, this.el, r.left - pad, r.top - pad);
+      this.tmp = document.createElement("canvas"); this.tmp.width = buf.width; this.tmp.height = buf.height;
+      this.tctx = this.tmp.getContext("2d");
+
+      // muestreo: densidad según la tinta, con tope de granos por dispositivo
+      const W = buf.width, H = buf.height, px = b.getImageData(0, 0, W, H).data;
+      let ink = 0;
+      for (let i = 3; i < px.length; i += 4) if (px[i] > 120) ink++;
+      const step = Math.max(SMALL ? 1.05 : .95, Math.sqrt(ink / (DPR * DPR) / this.cap));
+      const pts = [];
+      for (let y = 0; y < bh; y += step) for (let x = 0; x < bw; x += step) {
+        const jx = x + Math.random() * step * .9, jy = y + Math.random() * step * .9;
+        const i = ((jy * DPR | 0) * W + (jx * DPR | 0)) * 4;
+        if (px[i + 3] > 120) pts.push(jx, jy, px[i] - px[i + 2] > 60 ? 2 : 0);
+      }
+      const n = this.n = pts.length / 3, F = k => new Float32Array(n);
+      Object.assign(this, {
+        tx: F(), ty: F(), x: F(), y: F(), vx: F(), vy: F(), ox: F(), oy: F(), cx: F(), cy: F(),
+        del: F(), dur: F(), ms: F(), sw: F(), sh: F(), amp: F(), ph: F(), k: F(), a: F(),
+        bk: new Uint8Array(n), st: new Uint8Array(n)
+      });
+      let minX = 1e9, maxX = -1e9;
+      for (let i = 0; i < n; i++) { const X = pts[i * 3] + bx; minX = Math.min(minX, X); maxX = Math.max(maxX, X); }
+      this.minX = minX; this.W = Math.max(1, maxX - minX);
+      const VW = f.W, VH = f.H;
+      for (let i = 0; i < n; i++) {
+        const tx = pts[i * 3] + bx, ty = pts[i * 3 + 1] + by, base = pts[i * 3 + 2];
+        this.tx[i] = this.x[i] = tx; this.ty[i] = this.y[i] = ty;
+        // el viento viene de la izquierda y un poco de abajo; arco suave hacia arriba antes de posarse
+        const ox = tx - (.35 + Math.random() * .75) * VW - 30;
+        const oy = ty + (Math.random() + Math.random() - 1) * VH * .2 + VH * .05;
+        this.ox[i] = ox; this.oy[i] = oy;
+        this.cx[i] = lerp(ox, tx, .55 + Math.random() * .2);
+        this.cy[i] = lerp(oy, ty, .5) - (.02 + Math.random() * .1) * VH;
+        this.del[i] = (tx - minX) / this.W * this.spread + Math.random() * this.jit;
+        this.dur[i] = lerp(this.dmin, this.dmax, Math.random());
+        this.amp[i] = (Math.random() - .5) * 26; this.ph[i] = Math.random() * 6.28;
+        this.k[i] = .018 + Math.random() * .02; this.ms[i] = .55 + Math.random() * .9;
+        const s = clamp(step * (.85 + Math.random() * .45), .9, 2.4);
+        this.sw[i] = s * (.75 + Math.random() * .5) * DPR; this.sh[i] = s * (.75 + Math.random() * .5) * DPR;
+        const r = Math.random();
+        this.bk[i] = base === 2 ? 2 : r < .1 ? 1 : r < .13 ? 3 : r < .145 ? 2 : 0;
+      }
+      this.order = [0, 1, 2, 3].map(b => { const a = []; for (let i = 0; i < n; i++) if (this.bk[i] === b) a.push(i); return a; });
+      this.C = this.dmax + this.jit + .1;                       // cuándo empieza a verse la letra nítida
+      this.total = this.C + this.spread + this.fadeT;
+    }
+    crispAt(x, t) {
+      if (this.t0 < 0) return 0;
+      return clamp((t - this.t0 - this.C - (x - this.minX) / this.W * this.spread) / this.fadeT);
+    }
+    start(t) { this.t0 = t; this.st.fill(0); this.field.wake(); }
+    finish() { this.t0 = now() - this.total - 1; this.st.fill(2); this.x.set(this.tx); this.y.set(this.ty); this.vx.fill(0); this.vy.fill(0); }
+    reset() { this.t0 = -1; this.st.fill(0); this.field.wake(); }
+    leave(t) { this.leaveT = t; for (let i = 0; i < this.n; i++) { this.st[i] = 3; this.del[i] = (this.tx[i] - this.minX) / this.W * .35 + Math.random() * .15; } this.field.wake(); }
+    get done() { return this.t0 >= 0 && now() - this.t0 > this.total; }
+
+    // un paso de física + alfa de cada grano; devuelve si sigue habiendo movimiento
+    step(t, dt, ptr, R) {
+      const n = this.n; let moving = false;
+      const { x, y, vx, vy, tx, ty, st, a } = this;
+      if (this.leaveT >= 0) {
+        const lt = t - this.leaveT;
+        for (let i = 0; i < n; i++) {
+          const u = lt - this.del[i];
+          if (u > 0) {
+            vx[i] += (.09 + Math.sin(y[i] * .05 + t * 2 + i) * .05) * dt;
+            vy[i] += (Math.cos(x[i] * .04 + t * 1.7 + i) * .05 - .025) * dt;
+            vx[i] *= .985; vy[i] *= .985; x[i] += vx[i] * dt; y[i] += vy[i] * dt;
+          }
+          a[i] = clamp(1 - (u - .25) / 1.1);
+        }
+        return lt < 2;
+      }
+      if (this.t0 < 0) { a.fill(0); return false; }
+      const lt = t - this.t0;
+      for (let i = 0; i < n; i++) {
+        if (st[i] < 2) {
+          const u = (lt - this.del[i]) / this.dur[i];
+          if (u <= 0) { a[i] = 0; moving = true; continue; }
+          if (u < 1) {
+            st[i] = 1; moving = true;
+            const e = 1 - Math.pow(1 - u, 4), m = 1 - e;
+            const w = Math.sin(u * 7 + this.ph[i]) * this.amp[i] * m;
+            x[i] = m * m * this.ox[i] + 2 * m * e * this.cx[i] + e * e * tx[i];
+            y[i] = m * m * this.oy[i] + 2 * m * e * this.cy[i] + e * e * ty[i] + w;
+            a[i] = clamp(u / .12);
+            continue;
+          }
+          st[i] = 2; x[i] = tx[i]; y[i] = ty[i]; vx[i] = vy[i] = 0;
+        }
+        // asentado: resorte suave hacia su lugar; el dedo o el mouse lo corren
+        if (ptr) {
+          const dx = x[i] - ptr.x, dy = y[i] - ptr.y, d2 = dx * dx + dy * dy;
+          if (d2 < R * R) {
+            const d = Math.sqrt(d2) + .01, f = (1 - d / R) * (1 - d / R) * this.ms[i];
+            vx[i] += (dx / d * 1.05 * f + ptr.vx * .1 * f - dy / d * .35 * f) * dt;
+            vy[i] += (dy / d * 1.05 * f + ptr.vy * .1 * f + dx / d * .35 * f) * dt;
+          }
+        }
+        const ex = x[i] - tx[i], ey = y[i] - ty[i];
+        if (ex !== 0 || ey !== 0 || vx[i] !== 0 || vy[i] !== 0) {
+          vx[i] = (vx[i] - ex * this.k[i] * dt) * Math.pow(.88, dt);
+          vy[i] = (vy[i] - ey * this.k[i] * dt) * Math.pow(.88, dt);
+          x[i] += vx[i] * dt; y[i] += vy[i] * dt;
+          if (Math.abs(ex) + Math.abs(ey) < .05 && Math.abs(vx[i]) + Math.abs(vy[i]) < .02) { x[i] = tx[i]; y[i] = ty[i]; vx[i] = vy[i] = 0; }
+          else moving = true;
+        }
+        const disp = Math.abs(x[i] - tx[i]) + Math.abs(y[i] - ty[i]);
+        a[i] = Math.max(1 - this.crispAt(tx[i], t), clamp(disp * .6));
+      }
+      return moving || lt < this.total;
+    }
+
+    draw(ctx, t) {
+      const n = this.n;
+      // 1) la letra nítida, revelada al ritmo del viento y con huecos donde faltan granos
+      let crispMul = 1;
+      if (this.leaveT >= 0) crispMul = 1 - clamp((t - this.leaveT) / .3);
+      if (this.t0 >= 0 && crispMul > 0) {
+        const x0 = this.minX + this.W * (t - this.t0 - this.C) / this.spread;           // alfa 0
+        const x1 = this.minX + this.W * (t - this.t0 - this.C - this.fadeT) / this.spread; // alfa 1
+        if (x0 > this.bx) {
+          const tc = this.tctx, full = x1 >= this.bx + this.bw;
+          tc.globalCompositeOperation = "copy"; tc.globalAlpha = 1;
+          tc.drawImage(this.buf, 0, 0);
+          if (!full) {
+            const g = tc.createLinearGradient((x1 - this.bx) * DPR, 0, (x0 - this.bx) * DPR, 0);
+            g.addColorStop(0, "#000"); g.addColorStop(1, "rgba(0,0,0,0)");
+            tc.globalCompositeOperation = "destination-in"; tc.fillStyle = g;
+            tc.fillRect(0, 0, this.tmp.width, this.tmp.height);
+          }
+          tc.globalCompositeOperation = "destination-out"; tc.fillStyle = "#000";
+          const hs = 1.7 * DPR;
+          for (let i = 0; i < n; i++) {
+            if (this.st[i] !== 2) continue;
+            const disp = Math.abs(this.x[i] - this.tx[i]) + Math.abs(this.y[i] - this.ty[i]);
+            if (disp > .3) {
+              tc.globalAlpha = clamp(disp * .6);
+              tc.fillRect((this.tx[i] - this.bx) * DPR - hs, (this.ty[i] - this.by) * DPR - hs, hs * 2, hs * 2);
+            }
+          }
+          ctx.globalAlpha = crispMul;
+          ctx.drawImage(this.tmp, this.bx * DPR, this.by * DPR);
+        }
+      }
+      // 2) los granos
+      for (let b = 0; b < 4; b++) {
+        ctx.fillStyle = BUCKETS[b];
+        const ord = this.order[b];
+        let ga = -1;
+        for (let j = 0; j < ord.length; j++) {
+          const i = ord[j], al = this.a[i] * (b === 3 ? .8 : .92);
+          if (al < .02) continue;
+          if (Math.abs(al - ga) > .03) { ctx.globalAlpha = ga = al; }
+          ctx.fillRect(this.x[i] * DPR - this.sw[i] / 2, this.y[i] * DPR - this.sh[i] / 2, this.sw[i], this.sh[i]);
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  class SaltField {
+    constructor(host, specs) {
+      this.host = host; this.specs = specs; this.groups = {}; this.old = [];
+      this.cv = document.createElement("canvas"); this.cv.className = "salt-cv"; this.cv.setAttribute("aria-hidden", "true");
+      host.appendChild(this.cv); this.ctx = this.cv.getContext("2d");
+      this.visible = true; this.awake = true; this.last = now();
+      new IntersectionObserver(es => { this.visible = es[es.length - 1].isIntersecting; if (this.visible) this.wake(); }).observe(host);
+      this.layout(true);
+    }
+    layout(first) {
+      this.rect = this.host.getBoundingClientRect();
+      const W = this.host.clientWidth, H = this.host.clientHeight;
+      if (!first && W === this.W && H === this.H) return;
+      this.W = W; this.H = H;
+      this.cv.width = Math.round(W * DPR); this.cv.height = Math.round(H * DPR);
+      this.cv.style.width = W + "px"; this.cv.style.height = H + "px";
+      for (const [key, s] of Object.entries(this.specs)) {
+        const prev = this.groups[key];
+        const g = new Group(this, s.el, s.cap, s.opts);
+        if (prev && prev.t0 >= 0) { if (prev.done) g.finish(); else g.t0 = prev.t0; }
+        this.groups[key] = g;
+      }
+      this.wake();
+    }
+    retext(key) {
+      const g = this.groups[key]; if (!g) return;
+      const started = g.t0 >= 0, t = now();
+      if (started) { g.leave(t); this.old.push(g); }
+      this.rect = this.host.getBoundingClientRect();
+      const s = this.specs[key];
+      const ng = new Group(this, s.el, s.cap, s.opts);
+      this.groups[key] = ng;
+      if (started) ng.start(t + .35);
+    }
+    wake() { this.awake = true; }
+    frame(t) {
+      const dt = clamp((t - this.last) * 60, .2, 3); this.last = t;
+      if (!this.visible || !this.awake) return;
+      this.rect = this.host.getBoundingClientRect();
+      let ptr = null;
+      if (P.on && t - P.t < 1.2) {
+        ptr = { x: P.x - this.rect.left, y: P.y - this.rect.top, vx: P.vx, vy: P.vy };
+        if (ptr.x < -100 || ptr.y < -100 || ptr.x > this.W + 100 || ptr.y > this.H + 100) ptr = null;
+      }
+      const R = SMALL ? 42 : 56;
+      let busy = !!ptr;
+      const all = [...this.old, ...Object.values(this.groups)];
+      for (const g of all) busy = g.step(t, dt, ptr, R) || busy;
+      this.old = this.old.filter(g => t - g.leaveT < 2);
+      const c = this.ctx;
+      c.setTransform(1, 0, 0, 1, 0, 0);
+      c.clearRect(0, 0, this.cv.width, this.cv.height);
+      for (const g of all) g.draw(c, t);
+      if (!busy && !this.old.length) this.awake = false;   // quieto: no gastamos batería
+    }
+  }
+
+  /* entrada al anillo */
+  const ring = document.getElementById("ring"), stage = document.getElementById("stage");
+  const bg = document.getElementById("bg"), veil = document.getElementById("veil");
+  const after = document.getElementById("after"), halo = document.getElementById("haloCircle"), cue = document.getElementById("cue");
+  let hero = null, closing = null, heroState = 0;
+
+  function ringFrame() {
+    const vw = innerWidth, vh = stage.clientHeight;
+    const p = reduce ? 1 : clamp(-ring.getBoundingClientRect().top / (ring.offsetHeight - vh));
+
+    const sc = Math.max(vw / PHOTO.w, vh / PHOTO.h);
+    const posY = vw > vh ? .38 : .5;
+    bg.style.objectPosition = `50% ${posY * 100}%`;
+    const ox = (vw - PHOTO.w * sc) / 2, oy = (vh - PHOTO.h * sc) * posY;
+    const sx = ox + PHOTO.cx * sc, sy = oy + PHOTO.cy * sc, r0 = PHOTO.r * sc;
+
+    // el anillo sube y crece hasta ser un retrato; debajo van los nombres
+    const rEnd = Math.min(vw * .34, vh * .19);
+    const z = ease(clamp((p - .05) / .6));
+    const s = lerp(1, rEnd / r0, z);
+    const cx = lerp(sx, vw / 2, z), cy = lerp(sy, vh * .3, z);
+    bg.style.transform = `translate(${cx - sx * s}px, ${cy - sy * s}px) scale(${s})`;
+
+    const r = r0 * s;
+    const fog = ease(clamp((p - .2) / .45));
+    veil.style.background = `radial-gradient(circle at ${cx}px ${cy}px, rgba(244,244,241,0) ${r}px, rgba(244,244,241,${fog}) ${lerp(r * 3, r + 1, fog)}px)`;
+
+    const hr = r + 8, circ = 2 * Math.PI * hr, h = clamp((p - .55) / .25);
+    halo.setAttribute("cx", cx); halo.setAttribute("cy", cy); halo.setAttribute("r", hr);
+    halo.setAttribute("stroke-dasharray", circ); halo.setAttribute("stroke-dashoffset", circ * (1 - h));
+    halo.setAttribute("transform", `rotate(-90 ${cx} ${cy})`);
+
+    cue.style.opacity = 1 - clamp(p / .05);
+    // la posición final de los nombres no depende del scroll: así los granos saben adónde ir
+    after.style.top = `${vh * .3 + rEnd + Math.max(30, vh * .045)}px`;
+    if (!SALT) { after.style.opacity = clamp((p - .68) / .16); return; }
+
+    if (!hero) return;
+    if (p >= .6 && heroState === 0) {
+      heroState = 1; const t = now();
+      after.classList.add("lead-on");
+      hero.groups.names.start(t + .15);
+      hero.groups.date.start(t + 1.0);
+      clearTimeout(ringFrame.tw); ringFrame.tw = setTimeout(() => after.classList.add("where-on"), 3600);
+    } else if (p < .42 && heroState === 1) {
+      heroState = 0; clearTimeout(ringFrame.tw);
+      after.classList.remove("lead-on", "where-on");
+      hero.groups.names.reset(); hero.groups.date.reset();
+    }
+  }
+
+  /* cuenta regresiva (+ el segundo que se va se deshace en sal) */
+  const el = id => document.getElementById(id);
+  const pad = n => String(n).padStart(2, "0");
+  let last = "", shed = null;
+  function countFrame(force) {
+    const ms = Math.max(0, TARGET - Date.now());
+    const sec = Math.floor(ms / 1000);
+    const v = { d: Math.floor(sec / 86400), h: Math.floor(sec % 86400 / 3600), m: Math.floor(sec % 3600 / 60), s: sec % 60 };
+    if (lang + sec === last && !force) return;
+    const sameLang = last.startsWith(lang);
+    last = lang + sec;
+    if (shed && !force && sameLang) shed.spawn(el("s"));
+    el("d").textContent = v.d; el("h").textContent = pad(v.h); el("m").textContent = pad(v.m); el("s").textContent = pad(v.s);
+    for (const k of ["d", "h", "m", "s"]) el("u" + k).textContent = T[lang].units[k][v[k] === 1 ? 0 : 1];
+    if (ms === 0) document.querySelector("#count .until").textContent = T[lang].done;
+  }
+
+  // Unos pocos granos del número viejo se los lleva el viento. Discreto a propósito.
+  class Shed {
+    constructor(host) {
+      this.host = host; this.cv = document.createElement("canvas"); this.cv.className = "salt-cv"; this.cv.setAttribute("aria-hidden", "true");
+      host.appendChild(this.cv); this.ctx = this.cv.getContext("2d"); this.g = []; this.visible = false;
+      new IntersectionObserver(es => { this.visible = es[es.length - 1].isIntersecting; }).observe(host);
+      this.off = document.createElement("canvas"); this.octx = this.off.getContext("2d", { willReadFrequently: true });
+    }
+    size() {
+      const W = this.host.clientWidth, H = this.host.clientHeight;
+      if (W !== this.W || H !== this.H) { this.W = W; this.H = H; this.cv.width = W * DPR; this.cv.height = H * DPR; this.cv.style.width = W + "px"; this.cv.style.height = H + "px"; }
+    }
+    spawn(node) {
+      if (!this.visible) return;
+      this.size();
+      const hr = this.host.getBoundingClientRect(), r = node.getBoundingClientRect();
+      const w = Math.ceil(r.width), h = Math.ceil(r.height);
+      this.off.width = w; this.off.height = h;
+      const o = this.octx; o.clearRect(0, 0, w, h);
+      paintText(o, node, r.left, r.top);
+      const d = o.getImageData(0, 0, w, h).data, pts = [];
+      for (let i = 0; i < 400 && pts.length < (SMALL ? 26 : 36); i++) {
+        const x = Math.random() * w, y = h * .35 + Math.random() * h * .55;
+        if (d[((y | 0) * w + (x | 0)) * 4 + 3] > 140) pts.push([x, y]);
+      }
+      for (const [x, y] of pts) this.g.push({
+        x: r.left - hr.left + x, y: r.top - hr.top + y, vx: .25 + Math.random() * .6, vy: -.3 + Math.random() * .25,
+        t: now(), life: 1.1 + Math.random() * .9, s: (1 + Math.random() * .8) * DPR, c: Math.random() < .15 ? 2 : 0
+      });
+    }
+    frame(t, dt) {
+      if (!this.g.length && !this.dirty) return;
+      const c = this.ctx; c.clearRect(0, 0, this.cv.width, this.cv.height);
+      this.dirty = this.g.length > 0;
+      this.g = this.g.filter(p => t - p.t < p.life);
+      for (const p of this.g) {
+        p.vx += .01 * dt; p.vy += .004 * dt; p.x += p.vx * dt; p.y += p.vy * dt;
+        c.globalAlpha = .55 * (1 - (t - p.t) / p.life); c.fillStyle = BUCKETS[p.c];
+        c.fillRect(p.x * DPR, p.y * DPR, p.s, p.s);
+      }
+      c.globalAlpha = 1;
+    }
+  }
+
+  /* puntero: mouse en desktop, dedo en el celu (pasivo: nunca frena el scroll) */
+  function setP(x, y, t) {
+    const dt = Math.max(.008, t - P.t);
+    if (P.on && t - P.t < .1) { P.vx = clamp((x - P.x) / dt / 60, -30, 30); P.vy = clamp((y - P.y) / dt / 60, -30, 30); } else { P.vx = P.vy = 0; }
+    P.x = x; P.y = y; P.t = t; P.on = true;
+    hero && hero.wake(); closing && closing.wake();
+  }
+  if (SALT) {
+    addEventListener("pointermove", e => { if (e.pointerType === "mouse") setP(e.clientX, e.clientY, now()); }, { passive: true });
+    document.addEventListener("mouseleave", () => { P.on = false; });
+    addEventListener("touchstart", e => { const q = e.touches[0]; P.on = false; setP(q.clientX, q.clientY, now()); }, { passive: true });
+    addEventListener("touchmove", e => { const q = e.touches[0]; setP(q.clientX, q.clientY, now()); }, { passive: true });
+    addEventListener("touchend", () => { P.on = false; }, { passive: true });
+  }
+
+  document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+  let saved = null;
+  try { saved = localStorage.getItem("lang"); } catch (e) {}
+  setLang(new URLSearchParams(location.search).get("lang") || saved || ((navigator.language || "").toLowerCase().startsWith("de") ? "de" : "es"));
+
+  let lastT = now();
+  function loop() {
+    const t = now(), dt = clamp((t - lastT) * 60, .2, 3); lastT = t;
+    ringFrame(); countFrame();
+    if (hero) hero.frame(t);
+    if (closing) {
+      if (closing.groups.sign.t0 < 0 && closing.visible) {
+        const r = closing.host.getBoundingClientRect();
+        if (r.top < innerHeight * .78) closing.groups.sign.start(t);
+      }
+      closing.frame(t);
+    }
+    if (shed) shed.frame(t, dt);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  // Arranca cuando están las fuentes: la sal copia la letra real.
+  if (SALT) {
+    const fonts = ['500 80px "Bodoni Moda"', 'italic 400 80px "Bodoni Moda"', '500 14px "Hanken Grotesk"'];
+    let built = false;
+    const build = () => {
+      if (built) return; built = true;
+      try {
+        ringFrame();
+        hero = new SaltField(stage, {
+          names: { el: el("names"), cap: SMALL ? 4200 : 9000 },
+          date: { el: el("date"), cap: SMALL ? 2600 : 5200, opts: { spread: .8, dmin: 1.0, dmax: 1.5 } }
+        });
+        closing = new SaltField(el("close"), { sign: { el: el("sign"), cap: SMALL ? 3000 : 6000, opts: { spread: .9 } } });
+        shed = new Shed(el("count"));
+        let rt;
+        addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { ringFrame(); hero.layout(); closing.layout(); }, 150); });
+      } catch (e) {
+        console.error(e); document.documentElement.classList.remove("salt"); hero = closing = shed = null;
+      }
+    };
+    Promise.race([
+      Promise.all(fonts.map(f => document.fonts.load(f))).then(() => document.fonts.ready),
+      new Promise(r => setTimeout(r, 3500))
+    ]).then(build, build);
+  }
+</script>
+</body>
+</html>
