@@ -2,96 +2,145 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Julia & Nico · 9.10.2027</title>
 <meta name="description" content="Julia & Nico se casan · Buenos Aires, 9 de octubre de 2027">
+<meta property="og:title" content="Julia & Nico · 9.10.2027">
+<meta property="og:description" content="Nos casamos · Wir heiraten · Buenos Aires">
+<meta property="og:image" content="https://nscherzer.github.io/casamiento-web/foto.jpg">
+<meta name="theme-color" content="#f4efe7">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%92%8D%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f6f1ea;
-    --ink: #2f3a2f;
-    --muted: #6f776b;
-    --accent: #9a7b4f;
-    --line: #d9cfbf;
-    --card: #fffdf9;
+    --cream: #f4efe7;
+    --ink: #26302a;
+    --muted: #7a7f75;
+    --gold: #b08a4e;
+    --gold-soft: #d8c39b;
+    --white: #fffdf8;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
-    background: var(--bg);
+    background: var(--cream);
     color: var(--ink);
     font-family: "Jost", system-ui, sans-serif;
     font-weight: 300;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    overflow-x: hidden;
   }
+  .serif { font-family: "Cormorant Garamond", serif; }
+
+  /* ---------- idioma ---------- */
   .lang {
-    position: fixed; top: 16px; right: 16px; z-index: 10;
-    display: flex; gap: 2px;
-    background: rgba(255,253,249,.85); backdrop-filter: blur(6px);
-    border: 1px solid var(--line); border-radius: 999px; padding: 3px;
+    position: fixed; top: max(14px, env(safe-area-inset-top)); right: 14px; z-index: 50;
+    display: flex; gap: 2px; padding: 3px;
+    background: rgba(255,253,248,.18); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.45); border-radius: 999px;
+    transition: background .4s, border-color .4s;
   }
+  .lang.on-light { background: rgba(255,253,248,.75); border-color: var(--gold-soft); }
   .lang button {
     border: 0; background: none; cursor: pointer;
-    font: 500 12px/1 "Jost", sans-serif; letter-spacing: .12em;
-    color: var(--muted); padding: 8px 12px; border-radius: 999px;
+    font: 500 12px/1 "Jost", sans-serif; letter-spacing: .14em;
+    color: #fff; padding: 8px 12px; border-radius: 999px; transition: color .4s, background .4s;
   }
-  .lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .lang.on-light button { color: var(--muted); }
+  .lang button[aria-pressed="true"] { background: #fff; color: var(--ink); }
+  .lang.on-light button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
 
-  main {
-    width: 100%; max-width: 760px;
-    padding: 72px 16px 48px;
-    display: flex; flex-direction: column; align-items: center; text-align: center;
+  /* ---------- hero: el anillo como portal ---------- */
+  .hero { height: 340vh; position: relative; }
+  .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: #cfd3d6; }
+  .stage img.bg {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; will-change: transform; transform-origin: 0 0;
   }
-  .kicker {
-    font-size: 13px; letter-spacing: .32em; text-transform: uppercase; color: var(--accent);
-  }
-  h1 {
-    font-family: "Cormorant Garamond", serif; font-weight: 400;
-    font-size: clamp(56px, 13vw, 104px); line-height: 1; margin: 18px 0 10px;
-  }
-  h1 .amp { font-style: italic; color: var(--accent); padding: 0 .08em; }
-  .date {
-    font-family: "Cormorant Garamond", serif; font-size: clamp(22px, 5vw, 30px);
-    letter-spacing: .04em;
-  }
-  .place { color: var(--muted); margin-top: 6px; letter-spacing: .08em; }
+  #sparkles { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .veil { position: absolute; inset: 0; pointer-events: none; }
+  #halo { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
 
-  .photo {
-    margin: 40px 0; width: 100%; aspect-ratio: 3 / 4; max-width: 460px;
-    border-radius: 999px 999px 18px 18px; overflow: hidden;
-    border: 1px solid var(--line); background: var(--card);
-    position: relative;
+  .intro {
+    position: absolute; left: 0; right: 0; top: 13vh; text-align: center; color: #fff;
+    text-shadow: 0 2px 30px rgba(40,45,55,.35); padding: 0 16px; will-change: opacity, transform;
   }
-  .photo img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; display: block; }
-  .photo .fallback {
-    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-    font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 72px; color: var(--accent);
-    background: radial-gradient(circle at 50% 35%, #fffdf9 0%, #efe6d8 100%);
+  .intro .kicker { font-size: 13px; letter-spacing: .42em; text-transform: uppercase; opacity: .95; }
+  .intro h1 {
+    font-family: "Cormorant Garamond", serif; font-weight: 300;
+    font-size: clamp(60px, 15vw, 150px); line-height: .95; margin-top: 14px;
   }
+  .intro h1 em { font-style: italic; font-weight: 300; }
+  .scroll-hint {
+    position: absolute; left: 50%; bottom: max(26px, env(safe-area-inset-bottom)); transform: translateX(-50%);
+    color: #fff; font-size: 11px; letter-spacing: .32em; text-transform: uppercase; text-align: center;
+    text-shadow: 0 1px 12px rgba(0,0,0,.3);
+  }
+  .scroll-hint i {
+    display: block; width: 1px; height: 38px; margin: 10px auto 0;
+    background: linear-gradient(#fff, transparent); animation: drip 2.2s ease-in-out infinite;
+    transform-origin: top;
+  }
+  @keyframes drip { 0% { transform: scaleY(0); opacity: 1 } 60% { transform: scaleY(1); opacity: 1 } 100% { transform: scaleY(1); opacity: 0 } }
 
-  .countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 520px; }
-  .unit {
-    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
-    padding: 18px 4px 14px;
+  .reveal { position: absolute; inset: 0; pointer-events: none; }
+  .reveal .top, .reveal .bottom { position: absolute; left: 0; right: 0; text-align: center; padding: 0 16px; opacity: 0; will-change: opacity, transform; }
+  .reveal .top .kicker { font-size: 12px; letter-spacing: .42em; text-transform: uppercase; color: var(--gold); }
+  .reveal .top h2 {
+    font-family: "Cormorant Garamond", serif; font-weight: 300;
+    font-size: clamp(44px, 11vw, 96px); line-height: 1; margin-top: 8px;
   }
-  .num {
-    font-family: "Cormorant Garamond", serif; font-weight: 500;
-    font-size: clamp(30px, 8vw, 48px); line-height: 1; font-variant-numeric: tabular-nums;
+  .reveal .top h2 em { color: var(--gold); font-style: italic; }
+  .reveal .bottom .date {
+    font-family: "Cormorant Garamond", serif; font-size: clamp(26px, 6.4vw, 44px); letter-spacing: .14em;
   }
-  .lbl { margin-top: 8px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
-  .until { margin: 0 0 14px; color: var(--muted); letter-spacing: .06em; }
+  .reveal .bottom .date b { font-weight: 400; color: var(--gold); padding: 0 .25em; }
+  .reveal .bottom .place { margin-top: 8px; font-size: 13px; letter-spacing: .34em; text-transform: uppercase; color: var(--muted); }
 
-  .note {
-    margin-top: 44px; max-width: 520px; line-height: 1.7; font-size: 17px;
+  /* ---------- cuenta regresiva ---------- */
+  .count {
+    min-height: 100vh; min-height: 100svh; padding: 96px 16px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
   }
-  .photo.second { margin: 44px 0 0; max-width: 340px; }
-  .divider { width: 48px; height: 1px; background: var(--accent); margin: 44px auto 0; }
-  footer { padding: 28px 16px 40px; color: var(--muted); font-size: 13px; letter-spacing: .08em; }
+  .count .label { font-size: 12px; letter-spacing: .42em; text-transform: uppercase; color: var(--gold); }
+  .count h3 { font-family: "Cormorant Garamond", serif; font-weight: 300; font-style: italic; font-size: clamp(34px, 8vw, 58px); margin: 10px 0 44px; }
+  .rings { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 3vw, 28px); width: 100%; max-width: 720px; }
+  .ring { position: relative; aspect-ratio: 1; }
+  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
+  .ring .track { fill: none; stroke: var(--gold-soft); stroke-width: 1; opacity: .7; }
+  .ring .arc { fill: none; stroke: var(--gold); stroke-width: 2.2; stroke-linecap: round; }
+  .ring .val {
+    position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .ring .num { font-family: "Cormorant Garamond", serif; font-weight: 400; font-size: clamp(26px, 7.4vw, 60px); line-height: 1; font-variant-numeric: tabular-nums lining-nums; }
+  .ring .unit { margin-top: 6px; font-size: clamp(9px, 2.3vw, 12px); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+  .count .note { margin-top: 56px; max-width: 520px; font-size: 18px; line-height: 1.75; }
+  .fade-up { opacity: 0; transform: translateY(26px); transition: opacity 1.1s ease, transform 1.1s cubic-bezier(.2,.7,.2,1); }
+  .fade-up.in { opacity: 1; transform: none; }
+
+  /* ---------- segunda foto ---------- */
+  .closing { position: relative; height: 100vh; height: 100svh; overflow: hidden; }
+  .closing img { position: absolute; inset: -8% 0; width: 100%; height: 116%; object-fit: cover; will-change: transform; }
+  .closing::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, var(--cream) 0%, rgba(244,239,231,0) 22%, rgba(30,34,40,0) 60%, rgba(30,34,40,.5) 100%);
+  }
+  .closing .words {
+    position: absolute; left: 0; right: 0; bottom: max(64px, env(safe-area-inset-bottom)); z-index: 1;
+    text-align: center; color: #fff; padding: 0 16px; text-shadow: 0 2px 24px rgba(0,0,0,.35);
+  }
+  .closing .words p.big { font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 300; font-size: clamp(34px, 9vw, 72px); line-height: 1.05; }
+  .closing .words p.small { margin-top: 14px; font-size: 12px; letter-spacing: .4em; text-transform: uppercase; }
+
+  footer { padding: 36px 16px 44px; text-align: center; color: var(--muted); font-size: 12px; letter-spacing: .3em; }
+  footer span { color: var(--gold); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero { height: 100vh; }
+    .scroll-hint i { animation: none; }
+    .fade-up { opacity: 1; transform: none; transition: none; }
+  }
 </style>
 </head>
 <body>
@@ -100,86 +149,231 @@
     <button type="button" data-lang="de" aria-pressed="false">DE</button>
   </nav>
 
-  <main>
-    <p class="kicker" data-i18n="kicker">Nos casamos</p>
-    <h1>Julia <span class="amp">&amp;</span> Nico</h1>
-    <p class="date" data-i18n="date">9 de octubre de 2027</p>
-    <p class="place">Buenos Aires · Argentina</p>
+  <section class="hero" id="hero">
+    <div class="stage" id="stage">
+      <img class="bg" id="bg" src="foto.jpg" alt="Julia y Nico" fetchpriority="high">
+      <canvas id="sparkles"></canvas>
+      <div class="veil" id="veil"></div>
+      <svg id="halo" aria-hidden="true"><circle id="haloCircle" cx="0" cy="0" r="0" fill="none" stroke="#b08a4e" stroke-width="1.4"/><circle id="haloCircle2" cx="0" cy="0" r="0" fill="none" stroke="#d8c39b" stroke-width="1"/></svg>
 
-    <figure class="photo">
-      <div class="fallback">J &amp; N</div>
-      <img src="foto.jpg" alt="Julia y Nico" onerror="this.remove()">
-    </figure>
+      <div class="intro" id="intro">
+        <p class="kicker" data-i18n="kicker">Nos casamos</p>
+        <h1>Julia <em>&amp;</em> Nico</h1>
+      </div>
+      <div class="scroll-hint" id="hint"><span data-i18n="scroll">Deslizá</span><i></i></div>
 
-    <p class="until" data-i18n="until">Faltan</p>
-    <div class="countdown" role="timer" aria-live="off">
-      <div class="unit"><div class="num" id="d">–</div><div class="lbl" data-i18n="days">días</div></div>
-      <div class="unit"><div class="num" id="h">–</div><div class="lbl" data-i18n="hours">horas</div></div>
-      <div class="unit"><div class="num" id="m">–</div><div class="lbl" data-i18n="minutes">min</div></div>
-      <div class="unit"><div class="num" id="s">–</div><div class="lbl" data-i18n="seconds">seg</div></div>
+      <div class="reveal" id="reveal">
+        <div class="top" id="revealTop">
+          <p class="kicker" data-i18n="kicker">Nos casamos</p>
+          <h2>Julia <em>&amp;</em> Nico</h2>
+        </div>
+        <div class="bottom" id="revealBottom">
+          <p class="date">09<b>·</b>10<b>·</b>2027</p>
+          <p class="place">Buenos Aires</p>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <p class="note" data-i18n="note">Guardate la fecha. Muy pronto vas a recibir la invitación con todos los detalles.</p>
+  <section class="count" id="count">
+    <p class="label fade-up" data-i18n="until">Faltan</p>
+    <h3 class="fade-up" data-i18n="date">9 de octubre de 2027</h3>
+    <div class="rings fade-up" role="timer">
+      <div class="ring" data-k="d"><svg viewBox="0 0 100 100"><circle class="track" cx="50" cy="50" r="46"/><circle class="arc" cx="50" cy="50" r="46"/></svg><div class="val"><span class="num">–</span><span class="unit" data-i18n="days">días</span></div></div>
+      <div class="ring" data-k="h"><svg viewBox="0 0 100 100"><circle class="track" cx="50" cy="50" r="46"/><circle class="arc" cx="50" cy="50" r="46"/></svg><div class="val"><span class="num">–</span><span class="unit" data-i18n="hours">horas</span></div></div>
+      <div class="ring" data-k="m"><svg viewBox="0 0 100 100"><circle class="track" cx="50" cy="50" r="46"/><circle class="arc" cx="50" cy="50" r="46"/></svg><div class="val"><span class="num">–</span><span class="unit" data-i18n="minutes">min</span></div></div>
+      <div class="ring" data-k="s"><svg viewBox="0 0 100 100"><circle class="track" cx="50" cy="50" r="46"/><circle class="arc" cx="50" cy="50" r="46"/></svg><div class="val"><span class="num">–</span><span class="unit" data-i18n="seconds">seg</span></div></div>
+    </div>
+    <p class="note fade-up" data-i18n="note">Guardate la fecha. Muy pronto vas a recibir la invitación con todos los detalles.</p>
+  </section>
 
-    <figure class="photo second">
-      <img src="foto2.jpg" alt="Julia y Nico" loading="lazy" onerror="this.parentNode.remove()">
-    </figure>
-    <div class="divider"></div>
-  </main>
+  <section class="closing" id="closing">
+    <img id="closingImg" src="foto2.jpg" alt="Julia y Nico" loading="lazy">
+    <div class="words">
+      <p class="big" data-i18n="closing">¡Te esperamos!</p>
+      <p class="small">Julia &amp; Nico · 09.10.2027</p>
+    </div>
+  </section>
 
-  <footer>J &amp; N · 09.10.2027</footer>
+  <footer>J <span>&amp;</span> N · BUENOS AIRES</footer>
 
 <script>
   // 9 de octubre de 2027, 00:00 en Buenos Aires (UTC-3). Cambiar acá cuando esté la hora.
   const TARGET = new Date("2027-10-09T00:00:00-03:00");
 
+  // Anillo en foto.jpg (960x1280): centro y radio exterior, en píxeles de la foto.
+  const PHOTO = { w: 960, h: 1280, cx: 523, cy: 552, r: 80 };
+
   const T = {
     es: {
-      kicker: "Nos casamos", date: "9 de octubre de 2027", until: "Faltan",
+      kicker: "Nos casamos", scroll: "Deslizá", date: "9 de octubre de 2027", until: "Faltan",
       days: "días", hours: "horas", minutes: "min", seconds: "seg",
       note: "Guardate la fecha. Muy pronto vas a recibir la invitación con todos los detalles.",
-      done: "¡Hoy es el día!", alt: "Julia y Nico"
+      closing: "¡Te esperamos!", done: "¡Hoy es el día!", alt: "Julia y Nico"
     },
     de: {
-      kicker: "Wir heiraten", date: "9. Oktober 2027", until: "Noch",
+      kicker: "Wir heiraten", scroll: "Scrollen", date: "9. Oktober 2027", until: "Noch",
       days: "Tage", hours: "Stunden", minutes: "Min.", seconds: "Sek.",
       note: "Haltet euch den Termin frei. Die Einladung mit allen Details folgt bald.",
-      done: "Heute ist der Tag!", alt: "Julia und Nico"
+      closing: "Wir freuen uns auf euch!", done: "Heute ist der Tag!", alt: "Julia und Nico"
     }
   };
 
+  /* ---------- idioma ---------- */
   let lang = "es";
   function setLang(l) {
     lang = T[l] ? l : "es";
     document.documentElement.lang = lang;
     document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = T[lang][el.dataset.i18n]; });
     document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
-    document.querySelectorAll(".photo img").forEach(img => { img.alt = T[lang].alt; });
+    document.querySelectorAll("img").forEach(img => { img.alt = T[lang].alt; });
     try { localStorage.setItem("lang", lang); } catch (e) {}
-    tick();
   }
   document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
-
-  const pad = n => String(n).padStart(2, "0");
-  function tick() {
-    let ms = TARGET - Date.now();
-    if (ms <= 0) {
-      document.querySelector(".until").textContent = T[lang].done;
-      ["d","h","m","s"].forEach(id => document.getElementById(id).textContent = "0");
-      return;
-    }
-    const s = Math.floor(ms / 1000);
-    document.getElementById("d").textContent = Math.floor(s / 86400);
-    document.getElementById("h").textContent = pad(Math.floor(s % 86400 / 3600));
-    document.getElementById("m").textContent = pad(Math.floor(s % 3600 / 60));
-    document.getElementById("s").textContent = pad(s % 60);
-  }
-
   let saved = null;
   try { saved = localStorage.getItem("lang"); } catch (e) {}
-  const fromUrl = new URLSearchParams(location.search).get("lang");
-  setLang(fromUrl || saved || ((navigator.language || "").toLowerCase().startsWith("de") ? "de" : "es"));
-  setInterval(tick, 1000);
+  setLang(new URLSearchParams(location.search).get("lang") || saved || ((navigator.language || "").toLowerCase().startsWith("de") ? "de" : "es"));
+
+  /* ---------- hero ---------- */
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const hero = document.getElementById("hero"), bg = document.getElementById("bg"), veil = document.getElementById("veil");
+  const intro = document.getElementById("intro"), hint = document.getElementById("hint");
+  const top_ = document.getElementById("revealTop"), bottom_ = document.getElementById("revealBottom");
+  const halo = document.getElementById("haloCircle"), halo2 = document.getElementById("haloCircle2");
+  const langNav = document.querySelector(".lang");
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const lerp = (a, b, t) => a + (b - a) * t;
+
+  function heroFrame() {
+    const vw = innerWidth, vh = document.getElementById("stage").clientHeight;
+    const total = hero.offsetHeight - vh;
+    const p = reduce ? 0 : clamp(-hero.getBoundingClientRect().top / total);
+
+    // dónde cae el anillo con object-fit: cover
+    const sc = Math.max(vw / PHOTO.w, vh / PHOTO.h);
+    // en pantallas apaisadas se muestra más cielo para que el título no tape el anillo
+    const posY = vw > vh ? .22 : .5;
+    bg.style.objectPosition = `50% ${posY * 100}%`;
+    const ox = (vw - PHOTO.w * sc) / 2, oy = (vh - PHOTO.h * sc) * posY;
+    const sx = ox + PHOTO.cx * sc, sy = oy + PHOTO.cy * sc, r0 = PHOTO.r * sc;
+
+    // destino: el anillo centrado, grande
+    const rEnd = Math.min(vw * .34, vh * .22);
+    const sEnd = rEnd / r0;
+    const tx = vw / 2, ty = vh * .5;
+
+    const z = ease(clamp((p - .08) / .62));
+    const s = lerp(1, sEnd, z);
+    const cx = lerp(sx, tx, z), cy = lerp(sy, ty, z);
+    // escala alrededor del anillo y lo lleva al centro
+    bg.style.transform = `translate(${cx - sx * s}px, ${cy - sy * s}px) scale(${s})`;
+
+    // el mundo alrededor del anillo se vuelve crema
+    const r = r0 * s;
+    const fog = ease(clamp((p - .25) / .45));
+    const edge = lerp(r * 3, r + 1, fog);
+    veil.style.background = `radial-gradient(circle at ${cx}px ${cy}px, rgba(244,239,231,0) ${r}px, rgba(244,239,231,${fog}) ${edge}px)`;
+
+    // halo dorado alrededor del anillo
+    const h = clamp((p - .55) / .25);
+    halo.setAttribute("cx", cx); halo.setAttribute("cy", cy); halo.setAttribute("r", r + 10);
+    halo2.setAttribute("cx", cx); halo2.setAttribute("cy", cy); halo2.setAttribute("r", r + 18);
+    const circ = 2 * Math.PI * (r + 10);
+    halo.setAttribute("stroke-dasharray", circ); halo.setAttribute("stroke-dashoffset", circ * (1 - h));
+    halo.style.transform = `rotate(-90deg)`; halo.style.transformOrigin = `${cx}px ${cy}px`;
+    halo2.style.opacity = clamp((p - .75) / .15) * .8;
+
+    // textos
+    const io = 1 - clamp(p / .16);
+    intro.style.opacity = io; intro.style.transform = `translateY(${-p * 120}px)`;
+    hint.style.opacity = 1 - clamp(p / .06);
+    const ro = clamp((p - .7) / .18);
+    top_.style.opacity = ro; bottom_.style.opacity = ro;
+    top_.style.transform = `translateY(${(1 - ro) * 18}px)`; bottom_.style.transform = `translateY(${(1 - ro) * -18}px)`;
+    top_.style.bottom = `${vh - (cy - r - 34)}px`; bottom_.style.top = `${cy + r + 34}px`;
+
+    langNav.classList.toggle("on-light", fog > .5 || p >= 1);
+  }
+
+  /* ---------- brillos de sal ---------- */
+  const cv = document.getElementById("sparkles"), ctx = cv.getContext("2d");
+  let parts = [];
+  function sizeCanvas() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    cv.width = innerWidth * dpr; cv.height = cv.clientHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.round(Math.min(90, innerWidth / 8));
+    parts = Array.from({ length: n }, () => ({
+      x: Math.random() * innerWidth, y: cv.clientHeight * (.5 + Math.random() * .5),
+      r: .6 + Math.random() * 1.6, ph: Math.random() * Math.PI * 2, sp: .6 + Math.random() * 1.6,
+      vy: .05 + Math.random() * .25
+    }));
+  }
+  function drawSparkles(t) {
+    const h = cv.clientHeight;
+    ctx.clearRect(0, 0, innerWidth, h);
+    const fade = 1 - clamp((-hero.getBoundingClientRect().top / (hero.offsetHeight - h)) / .5);
+    if (fade <= 0) return;
+    for (const p of parts) {
+      p.y -= p.vy; if (p.y < h * .35) { p.y = h + 4; p.x = Math.random() * innerWidth; }
+      const a = Math.max(0, Math.sin(t / 1000 * p.sp + p.ph)) ** 3 * fade;
+      if (a < .02) continue;
+      ctx.globalAlpha = a; ctx.fillStyle = "#fff";
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+      if (p.r > 1.6) { // destello en cruz
+        ctx.globalAlpha = a * .7; ctx.fillRect(p.x - p.r * 4, p.y - .3, p.r * 8, .6); ctx.fillRect(p.x - .3, p.y - p.r * 4, .6, p.r * 8);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* ---------- cuenta regresiva en anillos ---------- */
+  const rings = {};
+  document.querySelectorAll(".ring").forEach(el => {
+    const arc = el.querySelector(".arc"), len = 2 * Math.PI * 46;
+    arc.style.strokeDasharray = len;
+    rings[el.dataset.k] = { num: el.querySelector(".num"), arc, len };
+  });
+  const pad = n => String(n).padStart(2, "0");
+  function countFrame() {
+    const ms = Math.max(0, TARGET - Date.now());
+    if (ms === 0) {
+      document.querySelector('.count .label').textContent = T[lang].done;
+    }
+    const sec = ms / 1000;
+    const d = Math.floor(sec / 86400), h = Math.floor(sec % 86400 / 3600), m = Math.floor(sec % 3600 / 60), s = sec % 60;
+    const set = (k, txt, frac) => {
+      const r = rings[k];
+      if (r.num.textContent !== txt) r.num.textContent = txt;
+      r.arc.style.strokeDashoffset = r.len * (1 - frac);
+    };
+    set("d", String(d), Math.min(1, d / 365));
+    set("h", pad(h), (h + m / 60) / 24);
+    set("m", pad(m), (m + s / 60) / 60);
+    set("s", pad(Math.floor(s)), s / 60);
+  }
+
+  /* ---------- segunda foto: parallax ---------- */
+  const closing = document.getElementById("closing"), closingImg = document.getElementById("closingImg");
+  function closingFrame() {
+    const r = closing.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) return;
+    const k = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+    closingImg.style.transform = `translateY(${k * -6}%) scale(${1.04 - Math.abs(k) * .04})`;
+  }
+
+  /* ---------- apariciones ---------- */
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .2 });
+  document.querySelectorAll(".fade-up").forEach((el, i) => { el.style.transitionDelay = (i * .12) + "s"; io.observe(el); });
+
+  function loop(t) {
+    heroFrame(); drawSparkles(t); countFrame(); closingFrame();
+    requestAnimationFrame(loop);
+  }
+  addEventListener("resize", sizeCanvas);
+  sizeCanvas();
+  if (bg.complete) heroFrame(); else bg.addEventListener("load", heroFrame);
+  requestAnimationFrame(loop);
 </script>
 </body>
 </html>
