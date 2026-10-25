@@ -72,6 +72,11 @@
     font-size: clamp(60px, 15vw, 150px); line-height: .95; margin-top: 14px;
   }
   .intro h1 em { font-style: italic; font-weight: 300; }
+  /* variante B: letras oscuras sobre las nubes */
+  .tinta .intro { color: var(--ink); text-shadow: 0 0 34px rgba(255,255,255,.85), 0 0 12px rgba(255,255,255,.6); }
+  .tinta .intro .kicker { color: #6b5532; font-weight: 500; }
+  .tinta .intro h1 { font-weight: 400; }
+  .tinta .intro h1 em { color: var(--gold); }
   .scroll-hint {
     position: absolute; left: 50%; bottom: max(26px, env(safe-area-inset-bottom)); transform: translateX(-50%);
     color: #fff; font-size: 11px; letter-spacing: .32em; text-transform: uppercase; text-align: center;
@@ -233,6 +238,11 @@
   let saved = null;
   try { saved = localStorage.getItem("lang"); } catch (e) {}
   setLang(new URLSearchParams(location.search).get("lang") || saved || ((navigator.language || "").toLowerCase().startsWith("de") ? "de" : "es"));
+
+  /* ---------- estilo (pruebas: ?estilo=celeste | ?estilo=tinta) ---------- */
+  const estilo = new URLSearchParams(location.search).get("estilo");
+  if (estilo === "celeste") document.getElementById("bg").src = "foto-celeste.jpg";
+  if (estilo === "tinta") document.body.classList.add("tinta");
 
   /* ---------- hero ---------- */
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
